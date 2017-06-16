@@ -1,0 +1,27 @@
+{
+  "name": "accountui",
+  "version": "0.9.0",
+  "description": "Account Admin web application",
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server -o"
+  },
+  "keywords": [],
+  "repository": "http://git.tiup.us/go/fullauth.git",
+  "author": "accountui",
+  "license": "LEENANXI REGULAR LICENSE",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-html-replace": "^1.6.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-uglify": "^2.0.0",
+    "gulp-less": "^3.1.0",
+    "gulp-rename": "1.2.2",
+    "run-sequence": "^1.2.2",
+    "arale-qrcode": "3.0.5"
+  }
+}

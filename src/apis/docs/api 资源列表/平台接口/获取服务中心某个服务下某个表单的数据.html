@@ -1,0 +1,70 @@
+<h2 id=获取服务中心某个服务下某个表单的数据>获取服务中心某个服务下某个表单的数据</h2><p>接口地址：/apis/platform/v1/servtbls/{aid}/records/{rid}<p>返回格式：JSON<p>请求方式：GET<p>请求头部：<pre><code>     Content-Type : application/json
+     Authorization: {Bearer Token}
+</code></pre><p>返回结果：<pre><code>{
+    \&quot;aid\&quot;: \&quot;1222\&quot;,
+    \&quot;atime\&quot;: \&quot;2014-07-17 11:09:47\&quot;,
+    \&quot;autocheck\&quot;: \&quot;0\&quot;,
+    \&quot;available\&quot;: \&quot;1\&quot;,
+    \&quot;begintime\&quot;: \&quot;0000-00-00 00:00:00\&quot;,
+    \&quot;categoryid\&quot;: \&quot;1\&quot;,
+    \&quot;categoryimg\&quot;: \&quot;https://static.tiup.cn/servcenter/images/cico_11.png\&quot;,
+    \&quot;categoryname\&quot;: \&quot;申请\&quot;,
+    \&quot;costtime\&quot;: \&quot;6秒\&quot;,
+    \&quot;count\&quot;: \&quot;0\&quot;,
+    \&quot;ctime\&quot;: \&quot;2014-07-17\&quot;,
+    \&quot;departmentid\&quot;: \&quot;4013\&quot;,
+    \&quot;departmentname\&quot;: \&quot;党委办公室\&quot;,
+    \&quot;endtime\&quot;: \&quot;0000-00-00 00:00:00\&quot;,
+    \&quot;fieldInfo\&quot;: [
+        {
+            \&quot;c\&quot;: null,
+            \&quot;h\&quot;: \&quot;\&quot;,
+            \&quot;key\&quot;: \&quot;field_1\&quot;,
+            \&quot;l\&quot;: \&quot;123\&quot;,
+            \&quot;n\&quot;: 1,
+            \&quot;o\&quot;: 1,
+            \&quot;t\&quot;: 13,
+            \&quot;value\&quot;: null
+        }
+    ],
+    \&quot;filterconf\&quot;: [],
+    \&quot;forbidfield\&quot;: [
+        \&quot;\&quot;
+    ],
+    \&quot;idenid\&quot;: \&quot;322212\&quot;,
+    \&quot;innerFieldInfo\&quot;: [
+        {
+            \&quot;disabled\&quot;: true,
+            \&quot;key\&quot;: \&quot;username\&quot;,
+            \&quot;mapper\&quot;: false,
+            \&quot;name\&quot;: \&quot;姓名\&quot;,
+            \&quot;require\&quot;: false,
+            \&quot;type\&quot;: \&quot;string\&quot;,
+            \&quot;value\&quot;: \&quot;王小明\&quot;
+        }
+    ],
+    \&quot;intro\&quot;: \&quot;简介\&quot;,
+    \&quot;mtime\&quot;: \&quot;2014-07-17\&quot;,
+    \&quot;number\&quot;: \&quot;122200001\&quot;,
+    \&quot;ptime\&quot;: \&quot;2014-07-17 11:09:47\&quot;,
+    \&quot;recordstatus\&quot;: \&quot;3\&quot;,
+    \&quot;recordstatusname\&quot;: \&quot;受理通过\&quot;,
+    \&quot;rid\&quot;: \&quot;1\&quot;,
+    \&quot;schoolid\&quot;: \&quot;226\&quot;,
+    \&quot;scope\&quot;: \&quot;1\&quot;,
+    \&quot;score\&quot;: 0,
+    \&quot;sname\&quot;: \&quot;服务名称\&quot;,
+    \&quot;status\&quot;: \&quot;2\&quot;,
+    \&quot;statusname\&quot;: \&quot;审核通过\&quot;,
+    \&quot;uid\&quot;: \&quot;1129568\&quot;,
+    \&quot;usagenum\&quot;: 19,
+    \&quot;user\&quot;: {
+        \&quot;logo200\&quot;: \&quot;http://pic.tiup.cn/data/logo/12/95/200_1129568_8.jpg\&quot;,
+        \&quot;logo50\&quot;: \&quot;http://pic.tiup.cn/data/logo/12/95/50_1129568_8.jpg\&quot;,
+        \&quot;real_name\&quot;: \&quot;创建人\&quot;,
+        \&quot;uid\&quot;: \&quot;11110000\&quot;
+    },
+    \&quot;userdept\&quot;: \&quot;党委办公室\&quot;
+}
+
+</code></pre><table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>aid<td>整形<td>服务ID<tr><td>atime<td>日期<td>表单签批日期<tr><td>autocheck<td>整形<td>0或1，服务是否自动受理<tr><td>available<td>整形<td>0或1，服务当前是否可填写<tr><td>begintime<td>日期<td>服务开始申请时间<tr><td>categoryid<td>整形<td>服务分类ID<tr><td>categoryname<td>字符串<td>服务分类名称<tr><td>categoryimg<td>字符串<td>服务分类图标<tr><td>costtime<td>字符串<td>表单受理所花费时间<tr><td>checktime<td>字符串<td>服务获审批时间<tr><td>count<td>整形<td>服务申请表单数<tr><td>ctime<td>日期<td>服务创建时间<tr><td>departmentid<td>整形<td>服务所属部门ID<tr><td>departmentname<td>字符串<td>服务所属部门名称<tr><td>endtime<td>日期<td>服务停止申请时间<tr><td>fieldInfo<td>Object<td>服务自定义字段结构<tr><td>filterconf<td>Object<td>服务过滤器结构<tr><td>idenid<td>整形<td>填表人身份ID<tr><td>hastodo<td>整形<td>0或1，是否有待办事项<tr><td>innerFieldInfo<td>Object<td>服务系统字段结构<tr><td>intro<td>字符串<td>服务简介<tr><td>maxnum<td>整形<td>服务允许同时提交的表单数量，若为0表示不限制<tr><td>mtime<td>日期<td>服务修改日期<tr><td>ptime<td>日期<td>表单提交日期<tr><td>schoolid<td>整形<td>服务所属学校<tr><td>scope<td>整形<td>服务开发范围ID<tr><td>score<td>整形<td>服务所获评分<tr><td>sname<td>字符串<td>服务名称<tr><td>status<td>整形<td>表单状态ID<tr><td>statusname<td>字符串<td>表单状态名称<tr><td>user<td>Object<td>服务创建者基本信息</table>

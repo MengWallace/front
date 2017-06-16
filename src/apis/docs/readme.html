@@ -1,0 +1,10 @@
+<h1 id=文档中心>文档中心</h1><p>大家在这里写文档，会自动拉取并同步到文档中心。<h2 id=关于草稿>关于草稿</h2><p>_ 开头的文件为草稿文件，不会发布到文档中心。<h2 id=关于图片>关于图片</h2><p>你可以把图片放到任何与文档相关的地方，开发者中心 &ldquo;mdrest&rdquo; 模块，会将您的图片路径转换为绝对路径，但我们建议您将图片放到两个地方之一。<ol><li>在您当前文档目录下的 img/* 下， 这样当您但文档发生修改或删除时，您可以很容易地清理相关图片。<li>放到：assets/img/*** 下。</ol><h2 id=关于相对路径引用>关于相对路径引用</h2><p>您可以经任何其他md文件或者图片连接到您的文档中，但应符合以下规范。<ul><li>图片引用可以采用以下两种形式之一。</ul><pre><code>![alt text](../your/pathto/img/logo.png)
+</code></pre><pre><code>![alt text][logo]
+
+[logo]: ../your/pathto/img/logo.png
+</code></pre><ul><li>文档引用
+站内md文档链接，我们推荐以下形式。</ul><pre><code>例如：您易用这个文档 [OAuth 2.0 文档][1],我们建议您把所有的站内文档链接写在页面的最下方，这样当文档地址发生变化时，便于程序更准确地生成html。
+
+[1]: ../your/pathto/oauth2.0.md
+</code></pre><p>这样开发者中心会将您的上面的md文件转换为以下html文件：<pre><code>&lt;p&gt;例如：您易用这个文档 &lt;a data-internalmd href=&quot;../your/pathto/oauth2.0&quot;&gt;OAuth 2.0 文档&lt;/a&gt;,我们建议您把所有的站内文档链接写在页面的最下方，这样当文档地址发生变化时，便于程序更准确地生成html。&lt;/p&gt;
+</code></pre><h2 id=备注>备注</h2><p>发布到文档中心时，确保您的文档在本机现实地址引用格式正确，且显示正常。

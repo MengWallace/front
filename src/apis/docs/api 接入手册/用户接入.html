@@ -1,0 +1,10 @@
+<h1 id=用户接入>用户接入</h1><p>用户接入是指，用户可以直接进入您的网站或应用，无需注册和登录流程。<h2 id=接入流程>接入流程</h2><ol><li>参考左侧 开发者流程 创建应用。<li>参考 Oauth 2.0 协议获取AccessToken<li>通过AccessToken获取用户基本信息<li>关联用户基本信息到您的网站</ol><h2 id=获取用户信息>获取用户信息</h2><p>请参考上面的接入流程获取AccessToken，本章将介绍通过AccessToken获取用户基本信息。<ul><li>网址:<code>https://auth_host/apis/oauth2/v1/userinfo</code><li>方法：<code>GET</code><li>请求参数: <code>Authorization: Bearer {access_token}</code><li>请求示例（cURL）：</ul><p>如果您获取到的 AccessToken 为 a14afef0f66fcffce3e0fcd2e34f6ff4，那请求为：<pre><code>   curl &quot;https://auth_host/apis/oauth2/v1/userinfo&quot; -H &quot;Authorization: Bearer a14afef0f66fcffce3e0fcd2e34f6ff4&quot;
+</code></pre><ul><li>返回结果：（HTTP状态码为：200）</ul><pre><code class=language-json> {
+   &quot;uid&quot;: &quot;4f6ff4af66fcffce3e0fcd2e3&quot;,
+   &quot;name&quot;: &quot;小明&quot;
+ }
+</code></pre><blockquote><p>这个包含的用户的基本信息，如果想获取更多个人信息，请参考 <a data-internalmd href=API%20接入手册/API%20资源列表/获取用户数据>API 资源列表/获取用户数据</a> 。</blockquote><ul><li>错误处理： （HTTP状态码为：非200）</ul><pre><code class=language-json>    {
+      &quot;error&quot;: &quot;bad_request&quot;,
+      &quot;error_description&quot;: &quot;error_description&quot;
+    }
+</code></pre>

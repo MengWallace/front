@@ -1,0 +1,11 @@
+<h4 id=获取一个学校的详细信息>获取一个学校的详细信息</h4><p>接口地址：/v1/schools/{sid}<p>返回格式：JSON<p>请求方式：GET<p>请求头部：<pre><code>     Content-Type : application/json
+     Authorization: {Bearer Token}
+</code></pre><p>请求参数：<p>无<p>返回结果：<pre><code>{
+    \&quot;schoolid\&quot; : \&quot;235\&quot;,
+    \&quot;region\&quot;: \&quot;华北地区\&quot;,
+    \&quot;schoollogo\&quot;: \&quot;http://xxxxxxxx.jpg\&quot;,
+    \&quot;schoolname\&quot;: \&quot;中国人民大学\&quot;,
+    \&quot;ownurl\&quot;: \&quot;v.ruc.edu.cn\&quot;,
+    \&quot;schoolurl\&quot;: \&quot;ruc\&quot;   
+}
+</code></pre><table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>schoolid<td>整形<td>学校ID<tr><td>region<td>字符串<td>所处地区<tr><td>schoollogo<td>字符串<td>学校logo<tr><td>schoolname<td>字符串<td>学校名称<tr><td>ownurl<td>字符串<td>学校域名<tr><td>schoolurl<td>字符串<td>学校代号</table>

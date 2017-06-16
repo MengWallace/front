@@ -1,0 +1,62 @@
+[
+{
+"id": "58607f74e89bde12fad87b3f.apps",
+"secret": "NMbDum4VRByZA442TAxs1q0a1d9kbXZjM5m-a_bkL4A",
+"redirecturi": "http://example.com",
+"allowedgranttypes": "authorization_code client_credentials",
+"name": "地质大学微信企业号",
+"description": "微信企业号关联相关。",
+"homepageuri": "http://example.com/",
+"level": 1,
+"status": "active",
+"createdat": "2016-12-26T10:24:52.757+08:00"
+},
+{
+"id": "58607517e89bde0be64d1fa1.apps",
+"secret": "bxx2N8R7ShWTzvo7Yj9IDTwlrCqZy-t10IrAEQ9PjyM",
+"redirecturi": "https://xuewu.com",
+"allowedgranttypes": "authorization_code client_credentials",
+"name": "学务中心APP",
+"description": "学务中心APP学务中心APP学务中心APP学务中心APP",
+"homepageuri": "https://xuewu.com",
+"level": 1,
+"status": "active",
+"createdat": "2016-12-26T09:40:39.196+08:00"
+},
+{
+"id": "585e33bce89bdee5c00113dc.apps",
+"secret": "3dKAuZ0aSfKEDuFsrE2QnMp0HCDDoiFkA0WwPyARolU",
+"redirecturi": "http://www.nanxime.com",
+"allowedgranttypes": "authorization_code client_credentials",
+"name": "南希测试",
+"description": "以极简的思维，测试我的故事。",
+"homepageuri": "http://www.nanxime.com/",
+"level": 1,
+"status": "active_center_banned",
+"createdat": "2016-12-24T16:37:16.856+08:00"
+},
+{
+"id": "585e3259e89bdee5c00113da.apps",
+"secret": "MhGOEJaFT06lyL5lLfRqfFgJSTQEQUX8reIrKv1KpGk",
+"redirecturi": "http://baidu.com",
+"allowedgranttypes": "authorization_code client_credentials",
+"name": "思晴",
+"description": "思晴的故事，我们的故事",
+"homepageuri": "http://baidu.com",
+"level": 1,
+"status": "active_review",
+"createdat": "2016-12-24T16:31:21.183+08:00"
+},
+{
+"id": "585d2fbde89bdedb43f29b69.test",
+"secret": "wkRskgvzSRKpwo5g1cutJuQIf4tC7OTyn3b1Opp208k",
+"redirecturi": "http://www.example.com",
+"allowedgranttypes": "authorization_code client_credentials",
+"name": "百度",
+"description": "我的故事我的故事我的故事",
+"homepageuri": "http://www.example.com",
+"level": 1,
+"status": "banned",
+"createdat": "2016-12-23T22:07:57.375+08:00"
+}
+]

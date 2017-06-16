@@ -1,0 +1,170 @@
+[
+  {
+    "date": "2017-02-21T18:45:04+08:00",
+    "location": "api 资源列表/平台接口/服务中心对接",
+    "summary": "操作用户服务中心数据 服务中心对接主要包含获取用户授权 和 调用API两个步骤。\n获取用户授权模式，实现操作该用户下的服务中心。 1.1 将 scope 为 servcenter 添加到scope列表，浏览器端发起用户授权\n http://auth_host/oauth2/authorize?&amp;scope=servcenter%20userinfo&amp;client_id=some_client_id&amp;response_type=code&amp;redirect_uri=http://www.exmaple.com/back&amp;state=somestate&amp;school_code=ruc&amp;theme=schools  1.2 参数可参考Oauth 2.0文档，修改上面的client_id 等参数获取 access token。\n1.3 使用AccessToken调用以下接口，实现对当前用户服务中心数据对管理\n表单签批 接口地址: /apis/servcenter/privacy/v3/servcenter/auditTbl\n请求头部：\n Content-Type : application/x-www-form-urlencoded Authorization: {Bearer Token}  请求方式: POST\n   请求参数 类型 是否必填 说明     aid string 是 服务id   rid string 是 表单id   result string 是 1.通过 2.驳回   memo string 否 签批意见   ord string 是 签批字段编号    返回结果、 签批成功或者失败",
+    "title": "服务中心对接",
+    "truncated": true
+  },
+  {
+    "date": "2017-02-21T18:20:38+08:00",
+    "location": "api 资源列表/获取用户数据",
+    "summary": "获取用户数据 获取用户数据，需要向用户进行请求授权，每个URL对应一个scope，如果您需要对应的用户权限，即可添加对应scope到参数列表。\n授权示例 例如您需要获取用户的 基本信息(userinfo) 和 用户的身份信息(profile)，则需要将用户导向以下网址:\n//多个scope用空格(%20)连接 /oauth2/authorize?scope=userinfo%20profile&amp;response_type=code&amp;client_id=586e1e0e34a6e50412254d2a.tiup&amp;redirect_uri=http://www.exmaple.com/callback/oauth  那么用户会看到如下图的网页：\n用户点击同意后，您就可以获取到 读取用户基础信息 和 身份信息的权限，请参考 OAuth 2.0 文档获取AccessToken，然后使用AccessToken即可获取对应数据。假如您获取的AccessToken为 586e1e0e34a6e50412254d2a，则获取用户数据方法为：\ncurl &quot;https://auth_host/apis/oauth2/v1/userinfo&quot; -H &quot;Authorization: Bearer 586e1e0e34a6e50412254d2a&quot;  目前开放的用户数据API列表如下：\nAPI列表 基础数据    URL Scope 描述     /apis/oauth2/v1/userinfo userinfo 用户基础数据，包含uid，姓名   /apis/oauth2/v1/profile profile 请求获取用户学工号，部门名称，主身份等数据   /apis/oauth2/v1/userinfo userinfo:email 请求获取用户邮箱数据   /apis/oauth2/v1/userinfo userinfo:phone 请求获取用户手机号    用户通知数据    URL Scope 描述     /apis/privacy/v3/notice/noticeDetail privacy 获取用户通知列表   /apis/privacy/v3/notice/types privacy 读取通知类型   /apis/privacy/v3/notice privacy 读取通知列表    服务中心对接 !",
+    "title": "获取用户数据",
+    "truncated": true
+  },
+  {
+    "date": "2017-02-16T11:29:16+08:00",
+    "location": "api 资源列表/平台接口/获取服务中心某个服务下某个表单的数据",
+    "summary": "获取服务中心某个服务下某个表单的数据 接口地址：/apis/platform/v1/servtbls/{aid}/records/{rid}\n返回格式：JSON\n请求方式：GET\n请求头部：\n Content-Type : application/json Authorization: {Bearer Token}  返回结果：\n{ \\&quot;aid\\&quot;: \\&quot;1222\\&quot;, \\&quot;atime\\&quot;: \\&quot;2014-07-17 11:09:47\\&quot;, \\&quot;autocheck\\&quot;: \\&quot;0\\&quot;, \\&quot;available\\&quot;: \\&quot;1\\&quot;, \\&quot;begintime\\&quot;: \\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;categoryid\\&quot;: \\&quot;1\\&quot;, \\&quot;categoryimg\\&quot;: \\&quot;https://static.tiup.cn/servcenter/images/cico_11.png\\&quot;, \\&quot;categoryname\\&quot;: \\&quot;申请\\&quot;, \\&quot;costtime\\&quot;: \\&quot;6秒\\&quot;, \\&quot;count\\&quot;: \\&quot;0\\&quot;, \\&quot;ctime\\&quot;: \\&quot;2014-07-17\\&quot;, \\&quot;departmentid\\&quot;: \\&quot;4013\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;党委办公室\\&quot;, \\&quot;endtime\\&quot;: \\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;fieldInfo\\&quot;: [ { \\&quot;c\\&quot;: null, \\&quot;h\\&quot;: \\&quot;\\&quot;, \\&quot;key\\&quot;: \\&quot;field_1\\&quot;, \\&quot;l\\&quot;: \\&quot;123\\&quot;, \\&quot;n\\&quot;: 1, \\&quot;o\\&quot;: 1, \\&quot;t\\&quot;: 13, \\&quot;value\\&quot;: null } ], \\&quot;filterconf\\&quot;: [], \\&quot;forbidfield\\&quot;: [ \\&quot;\\&quot; ], \\&quot;idenid\\&quot;: \\&quot;322212\\&quot;, \\&quot;innerFieldInfo\\&quot;: [ { \\&quot;disabled\\&quot;: true, \\&quot;key\\&quot;: \\&quot;username\\&quot;, \\&quot;mapper\\&quot;: false, \\&quot;name\\&quot;: \\&quot;姓名\\&quot;, \\&quot;require\\&quot;: false, \\&quot;type\\&quot;: \\&quot;string\\&quot;, \\&quot;value\\&quot;: \\&quot;王小明\\&quot; } ], \\&quot;intro\\&quot;: \\&quot;简介\\&quot;, \\&quot;mtime\\&quot;: \\&quot;2014-07-17\\&quot;, \\&quot;number\\&quot;: \\&quot;122200001\\&quot;, \\&quot;ptime\\&quot;: \\&quot;2014-07-17 11:09:47\\&quot;, \\&quot;recordstatus\\&quot;: \\&quot;3\\&quot;, \\&quot;recordstatusname\\&quot;: \\&quot;受理通过\\&quot;, \\&quot;rid\\&quot;: \\&quot;1\\&quot;, \\&quot;schoolid\\&quot;: \\&quot;226\\&quot;, \\&quot;scope\\&quot;: \\&quot;1\\&quot;, \\&quot;score\\&quot;: 0, \\&quot;sname\\&quot;: \\&quot;服务名称\\&quot;, \\&quot;status\\&quot;: \\&quot;2\\&quot;, \\&quot;statusname\\&quot;: \\&quot;审核通过\\&quot;, \\&quot;uid\\&quot;: \\&quot;1129568\\&quot;, \\&quot;usagenum\\&quot;: 19, \\&quot;user\\&quot;: { \\&quot;logo200\\&quot;: \\&quot;http://pic.",
+    "title": "获取服务中心某个服务下某个表单的数据",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-19T16:45:43+08:00",
+    "location": "api 资源列表/学校内部调用",
+    "summary": "学校内部调用 学校内部调用是为了整合学校内部系统资源，目前我们开放了TiUP平台数据和一键登录，供学校内部调用。\n接入流程  参考左侧 开发者流程 创建应用。 点击【我的应用】重的&rdquo;更多&rdquo;按钮。 点击申请高级权限 选择所需类型，并点击提交  接口列表 获取指定用户信息  URL: /apis/user/v1/users/:uid Method：GET Header: Authorization Bearer &lt;access_token&gt; 返回数据示例：  { &quot;uid&quot;: &quot;57ee6c24d38af013c9abe6e5&quot;, &quot;name&quot;: &quot;张三&quot;, &quot;gender&quot;: &quot;male&quot;, &quot;avatar&quot;: &quot;http://202.114.201.133/static/common/img/syslogo-v2/200/7.png&quot;, &quot;profiles&quot;:[ { &quot;code&quot;: &quot;cug&quot;, &quot;stno&quot;: &quot;1133880&quot;, &quot;isprimary&quot;: true, &quot;departmentname&quot;: &quot;远程与继续教育学院/网络与教育技术中心&quot;, &quot;departmenttype&quot;: &quot;学院&quot;, &quot;rolename&quot;: &quot;干部&quot;, &quot;roletype&quot;: &quot;教职工&quot;, &quot;schoolname&quot;: &quot;中国地质大学&quot; }, { &quot;code&quot;: &quot;cug&quot;, &quot;stno&quot;: &quot;10365003&quot;, &quot;isprimary&quot;: false, &quot;departmentname&quot;: &quot;远程与继续教育学院/网络与教育技术中心&quot;, &quot;departmenttype&quot;: &quot;学院&quot;, &quot;rolename&quot;: &quot;干部&quot;, &quot;roletype&quot;: &quot;教职工&quot;, &quot;schoolname&quot;: &quot;中国地质大学&quot; } ] }   备注： 如果一个用户有多个profiles字段信息，那么当前profile为 isprimary 为true 学工号。",
+    "title": "学校内部调用",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-12T14:58:24+08:00",
+    "location": "oauth 2.0",
+    "summary": "使用 OAuth 2.0 访问创新盟校 API TiUP产品支持 OAuth 2.0 协议的授权访问。关于 OAuth 2.0 协议规范，请参考这里。TiUP支持三种 OAuth 2.0 的授权流程：\n WEB应用的授权流程 移动客户端应用、桌面客户端应用的授权流程 服务器端与用户无关的直接调用  快速介绍 使用 OAuth 2.0 的流程可以简单概括为：\n 应用向TiUP请求授权。 TiUP为用户显示一个授权页面，用户在此页面确认是否同意应用的请求。 如果用户同意授权，应用会获取到一个访问令牌(access_token)，通过此令牌，应用可以访问授权用户的数据。 如果访问需要授权的 API，请使用 HTTPS 协议，加上 access_token 的 Header。  使用场景 这篇文章就三个主要的使用场景做下介绍。\nWEB应用 WEB应用需通过用户登录身份进行授权，授权流程图如下：\n(1) 客户端调用获取 Authorization Code 的 API  网址: http://auth_host/oauth2/authorize 方法： 浏览器端GET访问 请求参数:     参数名称 参数类型 是否必须 描述     client_id text 是 申请的 client id   response_type text 是 固定为：code   scope text 是 申请token权限，一般填写：userinfo，如果需要更多用户数据，请参考 《API 资源列表-获取用户数据》，查找对应的scope，多个scope用空格连接   redirect_uri text 是 成功授权后的回调地址，必须和申请应用时的地址一致，用于接收用户授权码   state text 否 client端的状态码。用于第三方应用防止CSRF攻击，成功授权后回调时会原样返回。   access_type text 否 一般情况下web应用不需要这个参数，移动端和桌面应用需要永久保持会话的时候需要这个参数，参数值为：offline     请求示例：   http://auth_host/oauth2/authorize?",
+    "title": "Oauth 2.0",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T11:42:35+08:00",
+    "location": "api 资源列表/平台接口/获取院级群列表",
+    "summary": "获取院级群列表 接口 /v1/schools/{sid}/colleges\n请求方式 get\n   参数 说明 必须     sid 学校id 是   curpage 分页，当前夜，默认1 否   perpage 分页，每页条数，默认10 否    成功返回结果\n{ \\&quot;count\\&quot;:\\&quot;5\\&quot;, \\&quot;data\\&quot;[ { \\&quot;gid\\&quot;:\\&quot;83865\\&quot;, \\&quot;gtype\\&quot;:\\&quot;1\\&quot;, \\&quot;gproperty\\&quot;:\\&quot;1\\&quot;, \\&quot;gauthority\\&quot;:\\&quot;3\\&quot;, \\&quot;gname\\&quot;:\\&quot;\\u6587\\u5b66\\u9662\\&quot;, \\&quot;gtags\\&quot;:\\&quot;\\u6587\\u5b66\\u9662 \\&quot;, \\&quot;gdesc\\&quot;:\\&quot;\\&quot;, \\&quot;logo\\&quot;:\\&quot;http:\\/\\/static.pr.tiup.us\\/\\/sysgroup\\/defaultgroup_v2.png\\&quot;, \\&quot;membernum\\&quot;:\\&quot;2\\&quot;, \\&quot;topicnum\\&quot;:\\&quot;2\\&quot;, \\&quot;ctime\\&quot;:\\&quot;2015-11-25\\&quot;, \\&quot;gstatus\\&quot;:\\&quot;0\\&quot;, \\&quot;schoolid\\&quot;:\\&quot;239\\&quot;, \\&quot;plantype\\&quot;:\\&quot;1\\&quot;, \\&quot;issystem\\&quot;:\\&quot;70\\&quot;, \\&quot;mtime\\&quot;:\\&quot;2015-12-08 19:44:52\\&quot;, \\&quot;departmentid\\&quot;:\\&quot;0\\&quot;, \\&quot;uids\\&quot;:\\&quot;\\&quot;, \\&quot;grouptype\\&quot;:\\&quot;sysgroup\\&quot;, \\&quot;defaultlogo\\&quot;:true, \\&quot;admin\\&quot;:[ { \\&quot;uid\\&quot;:\\&quot;1168929\\&quot;, \\&quot;rid\\&quot;:\\&quot;0\\&quot;, \\&quot;real_name\\&quot;:\\&quot;\\u7126\\u5e73\\u82f1\\&quot;, \\&quot;gender\\&quot;:\\&quot;2\\&quot;, \\&quot;logo200\\&quot;:\\&quot;http:\\/\\/static.pr.tiup.us\\/\\/common\\/img\\/syslogo-v2\\/200\\/13.png\\&quot;, \\&quot;logo50\\&quot;:\\&quot;http:\\/\\/static.pr.tiup.us\\/\\/common\\/img\\/syslogo-v2\\/50\\/13.png\\&quot; } ], \\&quot;owner\\&quot;:{ \\&quot;uid\\&quot;:\\&quot;1168929\\&quot;, \\&quot;rid\\&quot;:\\&quot;0\\&quot;, \\&quot;real_name\\&quot;:\\&quot;\\u7126\\u5e73\\u82f1\\&quot;, \\&quot;gender\\&quot;:\\&quot;2\\&quot;, \\&quot;logo200\\&quot;:\\&quot;http:\\/\\/static.",
+    "title": "获取院级群列表",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T11:41:31+08:00",
+    "location": "api 资源列表/平台接口/获取某个学校某个类别的通知列表",
+    "summary": "获取某个学校某个类别的通知列表  接口地址：/v1/schools/{schoolid}/notices 返回格式：JSON 请求方式：GET 请求头部：  Content-Type : application/json Authorization: {Bearer Token}  请求参数：\n   参数名称 参数类型 描述     perpage int 返回数据条数，默认为10   curpage int 返回当前页码数，默认为1   type int 返回列表的通知类型   uid int 返回此UID能访问到的所有通知    返回结果：\n { \\&quot;count\\&quot;:\\&quot;5909\\&quot;, \\&quot;data\\&quot;:[{ \\&quot;schoolid\\&quot;:\\&quot;235\\&quot;, \\&quot;nid\\&quot;:\\&quot;4864\\&quot;, \\&quot;type\\&quot;:\\&quot;1\\&quot;, \\&quot;fromuid\\&quot;:\\&quot;1076653\\&quot;, \\&quot;fromname\\&quot;:\\&quot;范桢\\&quot;, \\&quot;logo\\&quot;:\\&quot;http://static.tiup.cn/50/2.png\\&quot;, \\&quot;departmentid\\&quot;:\\&quot;4259\\&quot;, \\&quot;departmentname\\&quot;:\\&quot;信息技术中心\\&quot;, \\&quot;title\\&quot;:\\&quot;中国人民大学文化大厦二层防火分区卷帘改造招标公告\\&quot;, \\&quot;content\\&quot;:\\&quot;为了公开、公平、公正、合理地做好中国人民大学文化技园文化大厦二层防火分区卷帘改造招标工作，现我公司面向社会公开邀请符合条件的企业报名参加本工作事项的投标。\\&quot;, \\&quot;starttime\\&quot;:\\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;endtime\\&quot;:\\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;ctime\\&quot;:\\&quot;2015-01-01 10:10:10\\&quot; },{ \\&quot;schoolid\\&quot;:\\&quot;235\\&quot;, \\&quot;nid\\&quot;:\\&quot;5120\\&quot;, \\&quot;type\\&quot;:\\&quot;1\\&quot;, \\&quot;fromuid\\&quot;:\\&quot;1076653\\&quot;, \\&quot;fromname\\&quot;:\\&quot;范桢\\&quot;, \\&quot;logo\\&quot;:\\&quot;http://static.",
+    "title": "获取某个学校某个类别的通知列表",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T11:38:19+08:00",
+    "location": "api 资源列表/平台接口/获取当前学校的部门列表",
+    "summary": "获取当前学校的部门列表 接口地址：/v1/schools/{sid}/departments\n返回格式：JSON\n请求方式：GET\n请求头部：\n Content-Type : application/json Authorization: {Bearer Token}  请求参数：\n   请求字段值 字段类型 说明     perpage 整形 返回数据条数，默认为10   curpage 整形 返回当前页码数，默认为1   order 字符串 排序字段，默认为‘ctime desc’    返回结果：\n{ \\&quot;count\\&quot;: \\&quot;110\\&quot;, \\&quot;data\\&quot;: [ { \\&quot;ctime\\&quot;: \\&quot;2015-09-02\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;国际关系学院\\&quot;, \\&quot;departmentid\\&quot;: \\&quot;4223\\&quot;, }, { \\&quot;ctime\\&quot;: \\&quot;2015-09-02\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;信息学院\\&quot;, \\&quot;departmentid\\&quot;: \\&quot;4233\\&quot;, } ... ] }     返回字段值 字段类型 说明     count 整形 部门总数   data 数组 当前页部门数据数组   data-&gt;ctime 日期 部门创建时间   data-&gt;departmentname 字符串 部门名称   data-&gt;departmentid 整形 部门ID    ",
+    "title": "获取当前学校的部门列表",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:34:21+08:00",
+    "location": "api 资源列表/平台接口/添加班级群",
+    "summary": "添加班级群 接口 /v1/schools/{sid}/classes\n请求方式 post\n   参数 说明 必须     sid 学校id 是   classname 班级名称，应以xx学院xx年级xx班的形式命名 是   teacheruid 班主任uid 是   parentgid 所属院级群gid 是   adminuid 管理员uid 否   classtags 班级群标签 否    成功返回结果\n{ \\&quot;error\\&quot;:0, \\&quot;msg\\&quot;:\\&quot;ok\\&quot;, \\&quot;data\\&quot;:83938 }  ",
+    "title": "添加班级群",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:34:21+08:00",
+    "location": "api 资源列表/平台接口/获取一个学校的详细信息",
+    "summary": "获取一个学校的详细信息 接口地址：/v1/schools/{sid}\n返回格式：JSON\n请求方式：GET\n请求头部：\n Content-Type : application/json Authorization: {Bearer Token}  请求参数：\n无\n返回结果：\n{ \\&quot;schoolid\\&quot; : \\&quot;235\\&quot;, \\&quot;region\\&quot;: \\&quot;华北地区\\&quot;, \\&quot;schoollogo\\&quot;: \\&quot;http://xxxxxxxx.jpg\\&quot;, \\&quot;schoolname\\&quot;: \\&quot;中国人民大学\\&quot;, \\&quot;ownurl\\&quot;: \\&quot;v.ruc.edu.cn\\&quot;, \\&quot;schoolurl\\&quot;: \\&quot;ruc\\&quot; }     返回字段值 字段类型 说明     schoolid 整形 学校ID   region 字符串 所处地区   schoollogo 字符串 学校logo   schoolname 字符串 学校名称   ownurl 字符串 学校域名   schoolurl 字符串 学校代号    ",
+    "title": "获取一个学校的详细信息",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:34:21+08:00",
+    "location": "api 资源列表/平台接口/获取消息提醒列表",
+    "summary": "获取消息提醒列表  请求地址： /v1/sysmsgs\n 请求方法： get\n 请求参数：\n     参数名 说明     uid 消息的接收人uid   type 消息的类型对应平台 默认为全部 1提醒 2待办 3全部   result 消息的状态 默认为未处理 0所有 1未处理 2已处理   source 消息的来源 默认为全部 &lsquo;me&rsquo;:me,&lsquo;serv&rsquo;:服务中心,&lsquo;publichome&rsquo;:公共主页,&lsquo;group&rsquo;:群组,&lsquo;calender&rsquo;:日历,&lsquo;edu&rsquo;:课程中心,&lsquo;comments&rsquo;:评论,&lsquo;appcenter&rsquo;:应用中心   curpage 当前页码   perpage 每页条数     请求响应：  ```\n{\n\\&quot;code\\&quot;: 0, \\&quot;data\\&quot;: { \\&quot;count\\&quot;: \\&quot;2377\\&quot;, \\&quot;list\\&quot;: [ { \\&quot;uid\\&quot;: \\&quot;1168929\\&quot;, \\&quot;smid\\&quot;: \\&quot;1848188\\&quot;, \\&quot;subtype\\&quot;: \\&quot;serv_toaudit\\&quot;, \\&quot;content\\&quot;: { \\&quot;aid\\&quot;: \\&quot;5479\\&quot;, \\&quot;sname\\&quot;: \\&quot;公共邮箱申请服务\\&quot;, \\&quot;cat\\&quot;: \\&quot;1\\&quot;, \\&quot;fuid\\&quot;: 1168929 }, \\&quot;result\\&quot;: false, \\&quot;ctime\\&quot;: \\&quot;31分钟前\\&quot;, \\&quot;source\\&quot;: \\&quot;serv\\&quot;, \\&quot;hidden\\&quot;: \\&quot;0\\&quot;, \\&quot;fav\\&quot;: \\&quot;0\\&quot;, \\&quot;message\\&quot;: \\&quot;林黛玉 创建的 公共邮箱申请服务 请求签批\\&quot;, \\&quot;link\\&quot;: \\&quot;/servcenter/#/service/audit/5479\\&quot; }, .",
+    "title": "获取消息提醒列表",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T11:34:21+08:00",
+    "location": "api 资源列表/平台接口/获取服务中心某个服务的详细配置",
+    "summary": "获取服务中心某个服务的详细配置 接口地址：/v1/servtbls/{aid}\n返回格式：JSON\n请求方式：GET\n请求头部：\n Content-Type : application/json Authorization: {Bearer Token}  返回结果：\n{ \\&quot;aid\\&quot;: \\&quot;1111\\&quot;, \\&quot;atime\\&quot;: null, \\&quot;autocheck\\&quot;: \\&quot;0\\&quot;, \\&quot;available\\&quot;: \\&quot;1\\&quot;, \\&quot;begintime\\&quot;: \\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;categoryid\\&quot;: \\&quot;1\\&quot;, \\&quot;categoryimg\\&quot;: \\&quot;https://static.tiup.cn/servcenter/images/cico_11.png\\&quot;, \\&quot;categoryname\\&quot;: \\&quot;申请\\&quot;, \\&quot;count\\&quot;: \\&quot;0\\&quot;, \\&quot;ctime\\&quot;: \\&quot;2014-06-06\\&quot;, \\&quot;departmentid\\&quot;: \\&quot;4484\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;测试部门\\&quot;, \\&quot;endtime\\&quot;: \\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;fieldInfo\\&quot;: [ { \\&quot;c\\&quot;: null, \\&quot;h\\&quot;: \\&quot;\\&quot;, \\&quot;key\\&quot;: \\&quot;field_1\\&quot;, \\&quot;l\\&quot;: \\&quot;11\\&quot;, \\&quot;n\\&quot;: 1, \\&quot;o\\&quot;: 1, \\&quot;t\\&quot;: 13, \\&quot;value\\&quot;: null } ], \\&quot;filterconf\\&quot;: { \\&quot;age\\&quot;: { \\&quot;c\\&quot;: \\&quot;y\\&quot;, \\&quot;gt\\&quot;: \\&quot;&gt;=\\&quot;, \\&quot;gv\\&quot;: \\&quot;0\\&quot;, \\&quot;key\\&quot;: \\&quot;age\\&quot;, \\&quot;lt\\&quot;: \\&quot;&lt;=\\&quot;, \\&quot;lv\\&quot;: \\&quot;20\\&quot;, \\&quot;name\\&quot;: \\&quot;年龄\\&quot;, \\&quot;type\\&quot;: \\&quot;1\\&quot; } }, \\&quot;hastodo\\&quot;: \\&quot;0\\&quot;, \\&quot;innerFieldInfo\\&quot;: [ { \\&quot;disabled\\&quot;: true, \\&quot;key\\&quot;: \\&quot;stno\\&quot;, \\&quot;mapper\\&quot;: false, \\&quot;name\\&quot;: \\&quot;学工号\\&quot;, \\&quot;type\\&quot;: \\&quot;string\\&quot;, \\&quot;value\\&quot;: null } ], \\&quot;intro\\&quot;: \\&quot;仅部门内部\\&quot;, \\&quot;maxnum\\&quot;: \\&quot;0\\&quot;, \\&quot;mtime\\&quot;: \\&quot;2014-06-06\\&quot;, \\&quot;schoolid\\&quot;: \\&quot;226\\&quot;, \\&quot;scope\\&quot;: \\&quot;4\\&quot;, \\&quot;score\\&quot;: 0, \\&quot;sname\\&quot;: \\&quot;仅部门内部\\&quot;, \\&quot;status\\&quot;: \\&quot;5\\&quot;, \\&quot;statusname\\&quot;: \\&quot;已存档\\&quot;, \\&quot;user\\&quot;: { \\&quot;logo200\\&quot;: \\&quot;http://pic.",
+    "title": "获取服务中心某个服务的详细配置",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T11:23:44+08:00",
+    "location": "api 资源列表/平台接口/获取服务中心某个服务下的表单列表",
+    "summary": "获取服务中心某个服务下的表单列表 接口地址：/v1/servtbls/{aid}/records\n返回格式：JSON\n请求方式：GET\n请求头部：\n Content-Type : application/json Authorization: {Bearer Token}  请求参数：\n   请求字段值 字段类型 说明     perpage 整形 返回数据条数，默认为10   curpage 整形 返回当前页码数，默认为1   order 字符串 排序字段，默认为‘ctime desc’    返回结果：\n{ \\&quot;count\\&quot;: \\&quot;116\\&quot;, \\&quot;data\\&quot;: [ { \\&quot;ctime\\&quot;: \\&quot;2015-09-02\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;国际关系学院\\&quot;, \\&quot;deptid\\&quot;: \\&quot;4223\\&quot;, \\&quot;number\\&quot;: \\&quot;174900116\\&quot;, \\&quot;rid\\&quot;: \\&quot;116\\&quot;, \\&quot;status\\&quot;: \\&quot;1\\&quot;, \\&quot;statusname\\&quot;: \\&quot;签批中\\&quot;, \\&quot;uid\\&quot;: \\&quot;11771100\\&quot;, \\&quot;uname\\&quot;: \\&quot;王小明\\&quot; }, { \\&quot;ctime\\&quot;: \\&quot;2015-09-02\\&quot;, \\&quot;departmentname\\&quot;: \\&quot;法学院\\&quot;, \\&quot;deptid\\&quot;: \\&quot;4224\\&quot;, \\&quot;number\\&quot;: \\&quot;174900115\\&quot;, \\&quot;rid\\&quot;: \\&quot;115\\&quot;, \\&quot;status\\&quot;: \\&quot;1\\&quot;, \\&quot;statusname\\&quot;: \\&quot;签批中\\&quot;, \\&quot;uid\\&quot;: \\&quot;11771101\\&quot;, \\&quot;uname\\&quot;: \\&quot;李小明\\&quot; } ] }     返回字段值 字段类型 说明     count 整形 该服务表单总数   data 数组 表单数据数组   data-&gt;ctime 字符串 表单填写时间   data-&gt;departmentname 整形 表单填写人所在部门   data-&gt;deptid 整形 表单填写人所在部门ID   data-&gt;number 字符串 表单号   data-&gt;rid 整形 表单ID   data-&gt;status 整形 表单状态ID   data-&gt;statusname 字符串 表单状态明文   data-&gt;uid 字符串 表单填写人UID   data-&gt;uname 字符串 表单填写人姓名    ",
+    "title": "获取服务中心某个服务下的表单列表",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:23:44+08:00",
+    "location": "api 资源列表/平台接口/获取某条通知详情",
+    "summary": "获取某条通知详情  接口地址：/v1/notices/{nid} 返回格式：JSON 请求方式：GET 请求头部：\nContent-Type : application/json Authorization: {Bearer Token}  返回结果：\n { \\&quot;schoolid\\&quot;:\\&quot;235\\&quot;, \\&quot;nid\\&quot;:\\&quot;4864\\&quot;, \\&quot;type\\&quot;:\\&quot;1\\&quot;, \\&quot;fromuid\\&quot;:\\&quot;1076653\\&quot;, \\&quot;fromname\\&quot;:\\&quot;范桢\\&quot;, \\&quot;logo\\&quot;:\\&quot;http://static.tiup.cn/50/2.png\\&quot;, \\&quot;departmentid\\&quot;:\\&quot;4259\\&quot;, \\&quot;departmentname\\&quot;:\\&quot;信息技术中心\\&quot;, \\&quot;title\\&quot;:\\&quot;中国人民大学文化大厦二层防火分区卷帘改造招标公告\\&quot;, \\&quot;content\\&quot;:\\&quot;为了公开、公平、公正、合理地做好中国人民大学文化技园文化大厦二层防火分区卷帘改造招标工作，现我公司面向社会公开邀请符合条件的企业报名参加本工作事项的投标。\\&quot;, \\&quot;starttime\\&quot;:\\&quot;0000-00-00 00:00:00\\&quot;, \\&quot;endtime\\&quot;:\\&quot;0000-00-00 00:00:00\\&quot; }  返回字段值\n   返回字段值 字段类型 说明     schoolid int 学校的ID   nid int 通知ID   type int 通知类型   fromuid int 发布人uid   fromname string 发布人姓名   logo string 发布人头像   departmentid int 发布部门ID   departmentname string 发布部门名称   title string 通知标题   content string 通知内容   starttime string 通知的开始时间   endtime string 通知的结束时间     ",
+    "title": "获取某条通知详情",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:23:44+08:00",
+    "location": "api 资源列表/平台接口/添加班级群成员",
+    "summary": "添加班级群成员 接口 /v1/schools/{sid}/classes/{classid}/students\n请求方式 post\n   参数 说明 必须     sid 学校id 是   classid 班级id 是   uid 学生uid 是   rid 学生rid 是    成功返回结果\n{ \\&quot;code\\&quot;:0, \\&quot;msg\\&quot;:\\&quot;ok.\\&quot;, \\&quot;error\\&quot;:0 }  ",
+    "title": "添加班级群成员",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T11:07:25+08:00",
+    "location": "其他/帮助和反馈",
+    "summary": "帮助和反馈 开发者支持 开发者在开发前请仔细阅读相关文档，如果您需要其他帮助可以加入我们的开发者讨论群进行讨论。\n群号： 522631061\n注意事项  工作时间：周一至周五9:30-12:00, 14:00-18:00 （国家法定节假日除外）。 非工作时间（只提供云服务故障排查）  ",
+    "title": "帮助和反馈",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T10:56:46+08:00",
+    "location": "其他/使用条款",
+    "summary": "使用条款 欢迎使用 TiUP 欢迎您使用TiUP提供的服务！ TiUP服务条款（以下简称本条款）是您使用TiUP服务与服务提供方北京图优谱信息技术有限公司订立的协议，请您完整和充分的理解本条款的内容，特别是其中免除或者限制责任的内容。本条款中，服务提供方指北京图优谱信息技术有限公司及其相关服务运营关联单位（通常指的是用户所在单位或教育机构，有时也称域管理员），大多数时候称“我们”。用户指的是TiUP服务的使用者，在本条款中更多的称为“您”。 除非您已经阅读并明确同意本条款的内容，否则您不得使用TiUP。您使用TiUP部分或者全部服务的行为即视为您明确表示接受本条款的约束。 TiUP项下的服务包含信息管理、社交互动、网络媒体、即时通讯、广告等广泛的服务内容，我们可能会根据服务内容的特殊要求做出特别的规定，这些特别规定会与相关服务一同提供，经公布的特别规定将构成本条款的一部分，您在选择使用这些服务时，即表示同意接受相关的特别规定。\nTiUP 帐户的创建和管理 为了使用我们的服务，您需要一个TiUP帐户。您可以创建自己的TiUP帐户或者由管理员（通常指您所在的单位或教育机构）为您分配TiUP帐户。如果您使用的是由管理员分配的TiUP帐户，可能需要遵守另外的条款或附加条款，您的管理员有权访问或停用您的帐户。 为保护您的TiUP帐户，您应该妥善保管好您的密码，并形成良好的使用习惯，如设置与其他账号不同的密码，在安全的网络环境下使用服务，使用完毕安全退出登录等。您应对自己TiUP帐户上发生的活动或通过该帐户进行的活动负责，并可能因为账户和密码管理不善而承担给自己或他人造成的损失。\n合法使用TiUP的义务  1、您在申请使用TiUP提供的网络服务时，应提供准确的个人资料，如个人资料有任何变动，须及时更新。不得捏造虚假身份误导他人。 2、您在使用TiUP过程中，必须遵循以下合法使用的原则:  (a) 遵守中国有关的法律和法规； (b) 不得为任何非法目的而使用网络服务系统； &copy; 遵守所有与网络服务有关的网络协议、规定和程序； (d) 不得利用TiUP进行任何可能对互联网的正常运转造成不利影响的行为； (e) 不得利用TiUP传输任何骚扰性的、中伤他人的、辱骂性的、恐吓性的、庸俗淫秽的或其他任何非法的信息资料。  3、您在使用服务中，严禁有有以下言行:  (a) 反对宪法所确定的基本原则的； (b) 危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的； &copy; 损害国家荣誉和利益的； (d) 煽动民族仇恨、民族歧视，破坏民族团结的； (e) 破坏国家宗教政策，宣扬邪教和封建迷信的； (f) 散布谣言，扰乱社会秩序，破坏社会稳定的； (g) 散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的； (h) 侮辱或者诽谤他人，侵害他人合法权益的； (i) 含有法律、行政法规禁止的其他内容的。  4、在任何时候，未经帐户持有人的同意，您都不得使用其他人的帐户。亦不得利用网络通讯非法骚扰他人。您在使用服务时，不得将服务用于任何非法用途。也不得干扰任何其他用户使用和享有任何服务。  用户个人信息保护\n您的隐私受到保护，请参见TiUP隐私政策，了解有关收集和使用个人信息的披露规则。\n第三方内容 我们的服务会显示一些不属于TiUP的内容。这些内容由发布的实体承担全部责任。我们可能会审查相关内容，以确定其是否违法或违反了我们的政策；如果我们有理由相信该内容违反了我们的政策或违法，我们可以将其删除或拒绝显示。不过，请您充分理解，TiUP并无义务对这些内容进行审查，也不为之提供任何保证，因此您需要自行判断这些内容的真实性。\n知识产权声明 TIUP在服务中提供的所有软件、程序、数据和其他信息（包括但不限于网页、文字、图片、音频、视频、图表等）的知识产权归TiUP所有。 除另有特别声明外，TiUP在服务中使用的LOGO、商业标识，其著作权或商标权归TiUP所有。TiUP网站的元素、设计和布局构成TiUP服务的商业外观，受到反不正当竞争法的保护，您不得整体或部分复制或模仿这些元素、设计和布局，未经TiUP的书面许可，不得复制或转发网站上的任何图标、图像。 我们的某些服务允许您上传、提交、存储、发送或接收内容。您保留对该内容持有的任何知识产权的所有权。简言之，属于您的内容依然归您所有。但您应当保证享有该等内容的所有权或有适当的授权。 当您将内容上传、提交、存储或发送到我们的服务，以及通过我们的服务上传、提交、存储、发送或接收内容时，您同意已经授予TiUP（以及我们的合作伙伴）一项全球性的免费使用许可，即允许TiUP使用、托管、存储、复制、修改、创建衍生作品（例如，我们为了使您的内容更好地与我们的服务配合使用而进行翻译、改编或其他更改，由此产生的作品）、传播、出版、公开演示、公开展示和分发此类内容。该类授权仅用于TiUP运营、宣传和改进我们的服务，以及开发新的服务。该项许可在您停止使用我们的服务后依然有效。 如果您提交关于我们的服务的反馈或建议，我们可能会加以利用，但不对您承担任何义务。\n关于我们服务中的软件\n (1) 删除软件及其副本上关于著作权的信息； (2) 对软件进行反向工程、反向汇编、反向编译，或者以其他方式尝试发现软件的源代码； (3) 对TiUP拥有知识产权的内容进行使用、出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点等； (4) 对软件或者软件运行过程中释放到任何终端内存中的数据、软件运行过程中客户端与服务器端的交互数据，以及软件运行所必需的系统数据，进行复制、修改、增加、删除、挂接运行或创作任何衍生作品 （5）无论是否为商业目的，通过修改或伪造软件运行中的指令、数据，增加、删减、变动软件的功能或运行效果，或者将用于上述用途的软件、方法进行运营或向公众传播。  服务内容的变更 我我们始终在不断更改和改进我们的服务。我们可能会增加或删除功能，也可能暂停或彻底停止某项服务。 您可以随时停止使用我们的服务，尽管我们对此表示非常遗憾。TiUP也可能随时停止向您提供服务，或随时对我们的服务增加或设置新的限制。此类变更和终止可能并不会提前通知您。 我们认为您拥有自己数据的所有权并保留对此类数据的访问权限。如果我们停止某项服务，在合理可能的情况下，我们会向用户发出合理的提前通知，并让用户有机会将信息从服务中汇出。",
+    "title": "使用条款",
+    "truncated": true
+  },
+  {
+    "date": "2017-01-06T10:54:24+08:00",
+    "location": "其他/sdk下载",
+    "summary": "SDK下载 目前我们开放的SDK如下，随着时间的推移，会有更多的功能添加到SDK中。\n TiUP Oauth2 SSO Client Server Side TiUP Oauth2 Client Demo for Java TiUP Oauth2 Client for C#  ",
+    "title": "SDK下载",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-06T09:26:21+08:00",
+    "location": "api 接入手册/用户接入",
+    "summary": "用户接入 用户接入是指，用户可以直接进入您的网站或应用，无需注册和登录流程。\n接入流程  参考左侧 开发者流程 创建应用。 参考 Oauth 2.0 协议获取AccessToken 通过AccessToken获取用户基本信息 关联用户基本信息到您的网站  获取用户信息 请参考上面的接入流程获取AccessToken，本章将介绍通过AccessToken获取用户基本信息。\n 网址:https://auth_host/apis/oauth2/v1/userinfo 方法：GET 请求参数: Authorization: Bearer {access_token} 请求示例（cURL）：  如果您获取到的 AccessToken 为 a14afef0f66fcffce3e0fcd2e34f6ff4，那请求为：\n curl &quot;https://auth_host/apis/oauth2/v1/userinfo&quot; -H &quot;Authorization: Bearer a14afef0f66fcffce3e0fcd2e34f6ff4&quot;   返回结果：（HTTP状态码为：200）  { &quot;uid&quot;: &quot;4f6ff4af66fcffce3e0fcd2e3&quot;, &quot;name&quot;: &quot;小明&quot; }   这个包含的用户的基本信息，如果想获取更多个人信息，请参考 API 资源列表/获取用户数据 。\n  错误处理： （HTTP状态码为：非200）  { &quot;error&quot;: &quot;bad_request&quot;, &quot;error_description&quot;: &quot;error_description&quot; }  ",
+    "title": "用户接入",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-05T18:55:06+08:00",
+    "location": "api 接入手册/服务器端授权",
+    "summary": "服务器端授权 服务器端调用是指获取与用户无关的数据，主要用户学校内部应用数据同步，单点登录等应用，普通用户可以忽略。\n授权流程  参考左侧 开发者流程 创建应用。 为应用申请高级权限 等待审核通过 参考OAuth 2.0 文档  申请高级权限 为了保护数据安全，高级权限只针对校内应用开放，申请高级权限，请主动联系校方工作人员，否则不予通过。\n 注意：高级权限如果发现被恶意申请，你的账户可能被停用。\n ",
+    "title": "服务器端授权",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-05T18:19:24+08:00",
+    "location": "api 资源列表/获取公有数据",
+    "summary": "获取公有数据 公有数据是指不需要向任何个人或单位进行授权的数据，目前我们开放的公有数据如下。\nAPI列表    URL Scope 描述     /apis/public/v2/school_departments public 获取学校部门列表    接口详情 获取学校部门列表  网址:/apis/public/v2/school_departments 方法：GET 请求示例（cURL）：   curl &quot;/apis/public/v2/school_departments&quot;   返回结果：（HTTP状态码为：200）  { &quot;code&quot;: 200, &quot;msg&quot;: &quot;GetSchoolDepList Handler OK&quot;, &quot;data&quot;: { &quot;schooldeps&quot;: [ { &quot;departmentid&quot;: &quot;4053&quot;, &quot;departmentname&quot;: &quot;行政单位&quot;, &quot;parentid&quot;: &quot;0&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 739, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot; }, { &quot;departmentid&quot;: &quot;4055&quot;, &quot;departmentname&quot;: &quot;教务处&quot;, &quot;parentid&quot;: &quot;4053&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 1282, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot; }, { &quot;departmentid&quot;: &quot;4086&quot;, &quot;departmentname&quot;: &quot;资产与后勤管理处&quot;, &quot;parentid&quot;: &quot;4053&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 80, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-18 18:43:26&quot; } ], &quot;count&quot;: 169 } }   错误处理： （HTTP状态码为：非200）  { &quot;error&quot;: &quot;bad_request&quot;, &quot;error_description&quot;: &quot;error_description&quot; }  ",
+    "title": "获取公有数据",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-05T11:15:43+08:00",
+    "location": "快速入门",
+    "summary": "API 接入快速入门 本文档为需要快速了解接入API的用户提供一个概览，更为完整的API信息请参阅《API接入手册》。\n快速入门 下面通过一个简单的示例来演示API的使用.\n这个示例中展示了使用API获得学校所有部门数据 请求的url如下：\n/apis/public/v2/school_departments  返回值为json，具体见 获取公有数据, 完整网址为当前域名加url。\n{ &quot;code&quot;: 200, &quot;msg&quot;: &quot;GetSchoolDepList Handler OK&quot;, &quot;data&quot;: { &quot;schooldeps&quot;: [ { &quot;departmentid&quot;: &quot;4053&quot;, &quot;departmentname&quot;: &quot;行政单位&quot;, &quot;parentid&quot;: &quot;0&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 739, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot; }, { &quot;departmentid&quot;: &quot;4055&quot;, &quot;departmentname&quot;: &quot;教务处&quot;, &quot;parentid&quot;: &quot;4053&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 1282, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot; }, { &quot;departmentid&quot;: &quot;4086&quot;, &quot;departmentname&quot;: &quot;资产与后勤管理处&quot;, &quot;parentid&quot;: &quot;4053&quot;, &quot;schoolid&quot;: &quot;235&quot;, &quot;members&quot;: 80, &quot;description&quot;: &quot; &quot;, &quot;status&quot;: &quot;0&quot;, &quot;ctime&quot;: &quot;2013-08-18 18:43:26&quot; } ], &quot;count&quot;: 169 } }  ",
+    "title": "快速入门",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-05T10:47:46+08:00",
+    "location": "开发者流程",
+    "summary": "开发者使用流程 本文档为开发者接入索引，如果您是第一次使用开发者中心，可以参考该文档快速上手开发者中心。\n创建应用 为了保护用户的数据，防止API被滥用或恶意使用，豆瓣要求每个API的使用者申请一个应用，而每个应用唯一标识一个API使用者。你可以在申请页面创建一个新应用，填写必要信息后提交，就能得到你的应用。\n申请页面如下图：\n提交之后，如下图：\n应用创建成功后，您将得到ClientId 和 ClientSecret，请妥善保管您的ClientId 和 ClientSecret，如果造成滥用，我们可以随时停用当前应用。\n申请数据权限 本着为了保护用户的数据的目的，所有的用户数据权限申请必须经过用户同意，高级权限需要管理员审核。\n在您的应用内，诱导用户进去【获取 authorization code 的链接 】下面的网址，即可向用户发起权限申请，示例网址中的scope参数为userinfo，用于获取用户基本信息，申请界面如下。\n用户点击同意后，您就获得了对应权限，用户再次进入时，则不会弹出权限申请窗口。如果您的应用，在运行过程中需要其他权限，可以添加scope参数，再次向用户发起申请。\n注意事项 为了防止用户数据滥用，请根据实际情况申请用户权限，一般情况下用户基础信息就可以满足大部分使用场景，我们的工作人员会定期对用户授权进行审查，如果您申请了与使用场景非必要的用户权限，您的应用将会被停用或删除。",
+    "title": "开发者流程",
+    "truncated": false
+  },
+  {
+    "date": "2017-01-02T15:48:51+08:00",
+    "location": "readme",
+    "summary": "文档中心 大家在这里写文档，会自动拉取并同步到文档中心。\n关于草稿 _ 开头的文件为草稿文件，不会发布到文档中心。\n关于图片 你可以把图片放到任何与文档相关的地方，开发者中心 &ldquo;mdrest&rdquo; 模块，会将您的图片路径转换为绝对路径，但我们建议您将图片放到两个地方之一。\n 在您当前文档目录下的 img/* 下， 这样当您但文档发生修改或删除时，您可以很容易地清理相关图片。 放到：assets/img/*** 下。  关于相对路径引用 您可以经任何其他md文件或者图片连接到您的文档中，但应符合以下规范。\n 图片引用可以采用以下两种形式之一。  ![alt text](../your/pathto/img/logo.png)  ![alt text][logo] [logo]: ../your/pathto/img/logo.png   文档引用 站内md文档链接，我们推荐以下形式。  例如：您易用这个文档 [OAuth 2.0 文档][1],我们建议您把所有的站内文档链接写在页面的最下方，这样当文档地址发生变化时，便于程序更准确地生成html。 [1]: ../your/pathto/oauth2.0.md  这样开发者中心会将您的上面的md文件转换为以下html文件：\n&lt;p&gt;例如：您易用这个文档 &lt;a data-internalmd href=&quot;../your/pathto/oauth2.0&quot;&gt;OAuth 2.0 文档&lt;/a&gt;,我们建议您把所有的站内文档链接写在页面的最下方，这样当文档地址发生变化时，便于程序更准确地生成html。&lt;/p&gt;  备注 发布到文档中心时，确保您的文档在本机现实地址引用格式正确，且显示正常。",
+    "title": "README",
+    "truncated": false
+  }
+]

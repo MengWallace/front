@@ -1,0 +1,41 @@
+<h1 id=api-接入快速入门>API 接入快速入门</h1><p>本文档为需要快速了解接入API的用户提供一个概览，更为完整的API信息请参阅《API接入手册》。<h2 id=快速入门>快速入门</h2><p>下面通过一个简单的示例来演示API的使用.<p>这个示例中展示了使用API获得学校所有部门数据 请求的url如下：<pre><code>/apis/public/v2/school_departments
+</code></pre><p>返回值为json，具体见 <a data-internalmd href=API%20资源列表/获取公有数据>获取公有数据</a>, 完整网址为当前域名加url。<pre><code class=language-json>{
+  &quot;code&quot;: 200,
+  &quot;msg&quot;: &quot;GetSchoolDepList Handler OK&quot;,
+  &quot;data&quot;: {
+    &quot;schooldeps&quot;: [
+      {
+        &quot;departmentid&quot;: &quot;4053&quot;,
+        &quot;departmentname&quot;: &quot;行政单位&quot;,
+        &quot;parentid&quot;: &quot;0&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 739,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot;
+      },
+      {
+        &quot;departmentid&quot;: &quot;4055&quot;,
+        &quot;departmentname&quot;: &quot;教务处&quot;,
+        &quot;parentid&quot;: &quot;4053&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 1282,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot;
+      },
+      {
+        &quot;departmentid&quot;: &quot;4086&quot;,
+        &quot;departmentname&quot;: &quot;资产与后勤管理处&quot;,
+        &quot;parentid&quot;: &quot;4053&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 80,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-18 18:43:26&quot;
+      }
+    ],
+    &quot;count&quot;: 169
+  }
+}
+</code></pre>

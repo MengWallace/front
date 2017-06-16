@@ -1,0 +1,68 @@
+<h1 id=学校内部调用>学校内部调用</h1><p>学校内部调用是为了整合学校内部系统资源，目前我们开放了TiUP平台数据和一键登录，供学校内部调用。<h2 id=接入流程-1>接入流程</h2><ol><li>参考左侧 开发者流程 创建应用。<li>点击【我的应用】重的&rdquo;更多&rdquo;按钮。<li>点击申请高级权限<li>选择所需类型，并点击提交</ol><h2 id=接口列表>接口列表</h2><h3 id=获取指定用户信息>获取指定用户信息</h3><ul><li>URL: <code>/apis/user/v1/users/:uid</code><li>Method：<code>GET</code><li>Header: <code>Authorization Bearer &lt;access_token&gt;</code><li>返回数据示例：</ul><pre><code class=language-json>    {
+    &quot;uid&quot;: &quot;57ee6c24d38af013c9abe6e5&quot;,
+    &quot;name&quot;: &quot;张三&quot;,
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;avatar&quot;: &quot;http://202.114.201.133/static/common/img/syslogo-v2/200/7.png&quot;,
+    &quot;profiles&quot;:[
+        {
+            &quot;code&quot;: &quot;cug&quot;,
+            &quot;stno&quot;: &quot;1133880&quot;,
+            &quot;isprimary&quot;: true,
+            &quot;departmentname&quot;: &quot;远程与继续教育学院/网络与教育技术中心&quot;,
+            &quot;departmenttype&quot;: &quot;学院&quot;,
+            &quot;rolename&quot;: &quot;干部&quot;,
+            &quot;roletype&quot;: &quot;教职工&quot;,
+            &quot;schoolname&quot;: &quot;中国地质大学&quot;
+        },
+        {
+            &quot;code&quot;: &quot;cug&quot;,
+            &quot;stno&quot;: &quot;10365003&quot;,
+            &quot;isprimary&quot;: false,
+            &quot;departmentname&quot;: &quot;远程与继续教育学院/网络与教育技术中心&quot;,
+            &quot;departmenttype&quot;: &quot;学院&quot;,
+            &quot;rolename&quot;: &quot;干部&quot;,
+            &quot;roletype&quot;: &quot;教职工&quot;,
+            &quot;schoolname&quot;: &quot;中国地质大学&quot;
+        }
+    ]
+    }
+</code></pre><blockquote><p>备注： 如果一个用户有多个profiles字段信息，那么当前profile为 isprimary 为true 学工号。</blockquote><ul><li>cURL示例</ul><pre><code class=language-bash>curl -i -X GET \
+   -H &quot;Authorization:Bearer 6D5o2RxnRk6ofsMt4sG2pw&quot; \
+ 'http://account_host/apis/user/v1/users/57ee698ad38af013c9abe67a'
+</code></pre><h3 id=根据学工号查询用户数据>根据学工号查询用户数据</h3><ul><li>URL: <code>/apis/user/v1/users</code><li>Method：<code>GET</code><li><p>Header: <code>Authorization Bearer &lt;access_token&gt;</code><table><thead><tr><th align=center>参数名称<th align=center>参数类型<th align=center>是否必须<th>描述<tbody><tr><td align=center>profiles.code<td align=center>text<td align=center>(是)<td>学校域名码，例如：地质大学为cug，人民大学为：ruc，具体可询问学校定义<tr><td align=center>profiles.stno<td align=center>text<td align=center>(是)<td>学工号</table></ul><pre><code class=language-json>[
+  {
+    &quot;uid&quot;: &quot;57ee6c24d38af013c9abe6e5&quot;,
+    &quot;name&quot;: &quot;张三&quot;,
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;avatar&quot;: &quot;http://static.tiup.cn/200/7.png&quot;,
+    &quot;profiles&quot;:[
+        {
+        &quot;stno&quot;: &quot;11065003&quot;,
+        &quot;code&quot;: &quot;cug&quot;,
+        &quot;departmentname&quot;: &quot;远程与继续教育学院/网络与教育技术中心&quot;,
+        &quot;departmenttype&quot;: &quot;学院&quot;,
+        &quot;isprimary&quot;: true,
+        &quot;rolename&quot;: &quot;干部&quot;,
+        &quot;roletype&quot;: &quot;教职工&quot;,
+        &quot;schoolname&quot;: &quot;中国地质大学&quot;,
+        }
+    ]
+  }
+
+]
+</code></pre><blockquote><p>备注： 如果一个用户有多个profiles字段信息，那么当前profile为 isprimary 为true 学工号。</blockquote><ul><li>cURL示例</ul><p>下面是请求： /apis/user/v1/users?loginname=cug:13776 的cURL示例<pre><code class=language-bash>curl -i -X GET \
+   -H &quot;Authorization:Bearer uJglLu82SqmqwV5yTJI52w&quot; \
+ 'http://account_host/apis/user/v1/users?profiles.code=cug&amp;profiles.stno=065003'
+</code></pre><h3 id=tiup平台数据>TiUP平台数据</h3><table><thead><tr><th>URL<th>Scope<th>描述<tbody><tr><td><a data-internalmd href=API%20资源列表/平台接口/添加班级群>/v1/schools/{sid}/classes</a><td>tiup<td>添加班级群<tr><td><a data-internalmd href=API%20资源列表/平台接口/添加班级群成员>/v1/schools/{sid}/classes/{classid}/students</a><td>tiup<td>添加班级群成员<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取一个学校的详细信息>/v1/schools/{sid}</a><td>tiup<td>获取一个学校的详细信息<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取当前学校的部门列表>/v1/schools/{sid}/departments</a><td>tiup<td>获取当前学校的部门列表<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取服务中心某个服务下某个表单的数据>/v1/servtbls/{aid}/records/{cid}</a><td>tiup<td>获取服务中心某个服务下某个表单的数据<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取服务中心某个服务的详细配置>/v1/servtbls/{aid}</a><td>tiup<td>获取服务中心某个服务的详细配置<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取某个学校某个类别的通知列表>/v1/schools/{schoolid}/notices</a><td>tiup<td>获取某个学校某个类别的通知列表<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取某条通知详情>/v1/notices/{nid}</a><td>tiup<td>获取某条通知详情<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取消息提醒列表>/v1/sysmsgs</a><td>tiup<td>获取消息提醒列表<tr><td><a data-internalmd href=API%20资源列表/平台接口/获取院级群列表>/v1/schools/{sid}/colleges</a><td>tiup<td>获取院级群列表</table><h3 id=一键登录>一键登录</h3><p>可以从学校 OA 系统、网站一键进入TiUP应用，免去登录过程。接入流程图如下所示：<h4 id=步骤1-获取authkey>步骤1. 获取AuthKey</h4><ul><li>URL: <code>/apis/login/v1/authkey</code><li>Method：<code>GET</code><li><p>Header: <code>Authorization Bearer &lt;access_token&gt;</code><table><thead><tr><th align=center>参数名称<th align=center>参数类型<th align=center>是否必须<th>描述<tbody><tr><td align=center>alias<td align=center>text<td align=center>(是否必须)<td>用户名： 学校code + &ldquo;:&rdquo; + 学工号, 例如：ruc:20150000</table><li><p>Response<table><thead><tr><th align=center>参数名称<th align=center>参数类型<th>描述<tbody><tr><td align=center>access_token<td align=center>string<td>登陆/获取用户信息验证 Key<tr><td align=center>expires_in<td align=center>int<td>过期时间（单位：秒）<tr><td align=center>scope<td align=center>string<td>access_token 作用域，常为：<code>login</code></table></ul><pre><code class=language-json>    {
+        &quot;access_token&quot;: &quot;GHUSH-4qIXPScxa_OY0CbPS31W1OM24L&quot;,
+        &quot;scope&quot;:&quot;login&quot;,
+        &quot;expires_in&quot;: 3600
+    }
+</code></pre><ul><li><p>Example<pre><code class=language-bash>curl -i -X POST \
+   -H &quot;Authorization:Bearer AHdS1n4gQTy5GFS74WwEdQ&quot; \
+   -H &quot;Content-参数类型:application/x-www-form-urlencoded&quot; \
+   -d &quot;alias=ruc:201600001&quot; \
+ 'https://tiupapis.cn/oauth2/v1/authkey'
+</code></pre></ul><h4 id=步骤2-一键登录用户>步骤2. 一键登录用户</h4><p>例如：用户点击<code>打开TiUP主页</code> 按钮时，后端根据以下规则生成登录链接，并通过http redirect 函数（302), 跳转到该链接，即可完成TiUP应用的一键登录。<ul><li>URL: <code>/apis/oauth/v1/login</code><li><p>Method：<code>GET</code><table><thead><tr><th align=center>参数名称<th align=center>参数类型<th align=center>是否必须<th>描述<tbody><tr><td align=center>access_token<td align=center>text<td align=center>(是否必须)<td>调用“获取 Authkey”获取的 Authkey<tr><td align=center>redirect_uri<td align=center>text<td align=center>(是否必须)<td>登录成功后回调地址</table><li><p>Response</ul><p><code>登录成功，并跳转到： redirect_uri</code><ul><li><p>Example<pre><code>//在浏览器中打开以下URL
+https://tiupapis.cn/oauth/v1/login?access_token=&lt;access_token&gt;&amp;redirect_uri=&lt;redirect_uri&gt;
+</code></pre></ul>

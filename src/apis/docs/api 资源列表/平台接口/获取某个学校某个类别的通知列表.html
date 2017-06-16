@@ -1,0 +1,35 @@
+<h2 id=获取某个学校某个类别的通知列表>获取某个学校某个类别的通知列表</h2><ul><li>接口地址：/v1/schools/{schoolid}/notices<li>返回格式：JSON<li>请求方式：GET<li>请求头部：
+<code>Content-Type : application/json
+Authorization: {Bearer Token}</code><li><p>请求参数：<table><thead><tr><th>参数名称<th>参数类型<th>描述<tbody><tr><td>perpage<td>int<td>返回数据条数，默认为10<tr><td>curpage<td>int<td>返回当前页码数，默认为1<tr><td>type<td>int<td>返回列表的通知类型<tr><td>uid<td>int<td>返回此UID能访问到的所有通知</table><li><p>返回结果：<pre><code>    {
+        \&quot;count\&quot;:\&quot;5909\&quot;,
+        \&quot;data\&quot;:[{
+            \&quot;schoolid\&quot;:\&quot;235\&quot;,
+            \&quot;nid\&quot;:\&quot;4864\&quot;,
+            \&quot;type\&quot;:\&quot;1\&quot;,
+            \&quot;fromuid\&quot;:\&quot;1076653\&quot;,
+            \&quot;fromname\&quot;:\&quot;范桢\&quot;,
+            \&quot;logo\&quot;:\&quot;http://static.tiup.cn/50/2.png\&quot;,
+            \&quot;departmentid\&quot;:\&quot;4259\&quot;,
+            \&quot;departmentname\&quot;:\&quot;信息技术中心\&quot;,
+            \&quot;title\&quot;:\&quot;中国人民大学文化大厦二层防火分区卷帘改造招标公告\&quot;,
+            \&quot;content\&quot;:\&quot;为了公开、公平、公正、合理地做好中国人民大学文化技园文化大厦二层防火分区卷帘改造招标工作，现我公司面向社会公开邀请符合条件的企业报名参加本工作事项的投标。\&quot;,
+            \&quot;starttime\&quot;:\&quot;0000-00-00 00:00:00\&quot;,
+            \&quot;endtime\&quot;:\&quot;0000-00-00 00:00:00\&quot;,
+                            \&quot;ctime\&quot;:\&quot;2015-01-01 10:10:10\&quot;
+        },{
+            \&quot;schoolid\&quot;:\&quot;235\&quot;,
+            \&quot;nid\&quot;:\&quot;5120\&quot;,
+            \&quot;type\&quot;:\&quot;1\&quot;,
+            \&quot;fromuid\&quot;:\&quot;1076653\&quot;,
+            \&quot;fromname\&quot;:\&quot;范桢\&quot;,
+            \&quot;logo\&quot;:\&quot;http://static.tiup.cn/50/2.png\&quot;,
+            \&quot;departmentid\&quot;:\&quot;4259\&quot;,
+            \&quot;departmentname\&quot;:\&quot;信息技术中心\&quot;,
+            \&quot;title\&quot;:\&quot;关于2011-2012学年研究生管理助理岗位设置与招聘的通知\&quot;,
+            \&quot;content\&quot;:\&quot; 各单位： 根据《中国人民大学研究生管理助理岗位管理实施细则》（2009-2010学年校办字35号）的规定，现将2011-2012学年研究生管理助理（以下简称“助管”）岗位设置相关事宜通知如下 \&quot;,
+            \&quot;starttime\&quot;:\&quot;0000-00-00 00:00:00\&quot;,
+            \&quot;endtime\&quot;:\&quot;0000-00-00 00:00:00\&quot;,
+                            \&quot;ctime\&quot;:\&quot;2015-01-01 10:10:10\&quot;
+        }]  
+    }
+</code></pre><li><p>返回字段值<table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>count<td>int<td>通知总数目<tr><td>data<td>array<td>返回的数据<tr><td>data-&gt;schoolid<td>int<td>学校的ID<tr><td>data-&gt;nid<td>int<td>通知ID<tr><td>data-&gt;type<td>int<td>通知类型<tr><td>data-&gt;fromuid<td>int<td>发布人uid<tr><td>data-&gt;fromname<td>string<td>发布人姓名<tr><td>data-&gt;logo<td>string<td>发布人头像<tr><td>data-&gt;departmentid<td>int<td>发布部门ID<tr><td>data-&gt;departmentname<td>string<td>发布部门名称<tr><td>data-&gt;title<td>string<td>通知标题<tr><td>data-&gt;content<td>string<td>通知内容<tr><td>data-&gt;starttime<td>string<td>通知的开始时间<tr><td>data-&gt;endtime<td>string<td>通知的结束时间<tr><td>data-&gt;ctime<td>string<td>通知的创建时间</table></ul>

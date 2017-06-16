@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>filter</title>
+</head>
+<body>
+<div id="demo-wrap">
+    <div class="product-head">
+        <p>搜索列表内容:</p>
+        <div id="form"></div>
+    </div>
+    <ul id="demo-list">
+        <li><a href="#">张三</a></li>
+        <li><a href="#">李四</a></li>
+        <li><a href="#">jQuery</a></li>
+        <li><a href="#">Apple</a></li>
+        <li><a href="#">AAAAAAA</a></li>
+        <li><a href="#">BBBBBBB</a></li>
+        <li><a href="#">BCCCCCCC</a></li>
+        <li><a href="#">CCCCCCC</a></li>
+        <li><a href="#">CDDDDD</a></li>
+        <li><a href="#">CAAAAA</a></li>
+        <li><a href="#">EEDDDDDD</a></li>
+        <li><a href="#">Feeee</a></li>
+        <li><a href="#">ACCCCCCC</a></li>
+        <li><a href="#">FEEEEEEEE</a></li>
+        <li><a href="#">jJack</a></li>
+    </ul>
+</div>
+<script type="text/javascript" src ="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js "></script>
+<script type="text/javascript">
+	(function($) {
+    $.expr[":"].Contains = function(a, i, m) {
+        return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+    };
+    function filterList(header, list) {
+        //@header 头部元素
+        //@list 列表
+        //创建一个搜素表单
+        var form = $("<form>").attr({
+            "class":"filterform",
+            action:"#"
+        }), input = $("<input>").attr({
+            "class":"filterinput",
+            type:"text"
+        });
+        $(form).append(input).appendTo(header);
+        $(input).change(function() {
+            var filter = $(this).val();
+            console.log(filter);
+            if (filter) {
+                $matches = $(list).find("a:Contains(" + filter + ")").parent();
+                $("li", list).not($matches).slideUp();
+                $matches.slideDown();
+            } else {
+                $(list).find("li").slideDown();
+            }
+            return false;
+        }).keyup(function() {
+            $(this).change();
+        });
+    }
+    $(function() {
+        filterList($("#form"), $("#demo-list"));
+    });
+})(jQuery); 
+</script>
+	
+</body>
+</html>

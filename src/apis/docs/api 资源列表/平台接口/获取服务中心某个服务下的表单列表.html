@@ -1,0 +1,30 @@
+<h4 id=获取服务中心某个服务下的表单列表>获取服务中心某个服务下的表单列表</h4><p>接口地址：/v1/servtbls/{aid}/records<p>返回格式：JSON<p>请求方式：GET<p>请求头部：<pre><code>     Content-Type : application/json
+     Authorization: {Bearer Token}
+</code></pre><p>请求参数：<table><thead><tr><th>请求字段值<th>字段类型<th>说明<tbody><tr><td>perpage<td>整形<td>返回数据条数，默认为10<tr><td>curpage<td>整形<td>返回当前页码数，默认为1<tr><td>order<td>字符串<td>排序字段，默认为‘ctime desc’</table><p>返回结果：<pre><code>{
+    \&quot;count\&quot;: \&quot;116\&quot;,
+    \&quot;data\&quot;: [
+        {
+            \&quot;ctime\&quot;: \&quot;2015-09-02\&quot;,
+            \&quot;departmentname\&quot;: \&quot;国际关系学院\&quot;,
+            \&quot;deptid\&quot;: \&quot;4223\&quot;,
+            \&quot;number\&quot;: \&quot;174900116\&quot;,
+            \&quot;rid\&quot;: \&quot;116\&quot;,
+            \&quot;status\&quot;: \&quot;1\&quot;,
+            \&quot;statusname\&quot;: \&quot;签批中\&quot;,
+            \&quot;uid\&quot;: \&quot;11771100\&quot;,
+            \&quot;uname\&quot;: \&quot;王小明\&quot;
+        },
+        {
+            \&quot;ctime\&quot;: \&quot;2015-09-02\&quot;,
+            \&quot;departmentname\&quot;: \&quot;法学院\&quot;,
+            \&quot;deptid\&quot;: \&quot;4224\&quot;,
+            \&quot;number\&quot;: \&quot;174900115\&quot;,
+            \&quot;rid\&quot;: \&quot;115\&quot;,
+            \&quot;status\&quot;: \&quot;1\&quot;,
+            \&quot;statusname\&quot;: \&quot;签批中\&quot;,
+            \&quot;uid\&quot;: \&quot;11771101\&quot;,
+            \&quot;uname\&quot;: \&quot;李小明\&quot;
+        }
+    ]
+}
+</code></pre><table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>count<td>整形<td>该服务表单总数<tr><td>data<td>数组<td>表单数据数组<tr><td>data-&gt;ctime<td>字符串<td>表单填写时间<tr><td>data-&gt;departmentname<td>整形<td>表单填写人所在部门<tr><td>data-&gt;deptid<td>整形<td>表单填写人所在部门ID<tr><td>data-&gt;number<td>字符串<td>表单号<tr><td>data-&gt;rid<td>整形<td>表单ID<tr><td>data-&gt;status<td>整形<td>表单状态ID<tr><td>data-&gt;statusname<td>字符串<td>表单状态明文<tr><td>data-&gt;uid<td>字符串<td>表单填写人UID<tr><td>data-&gt;uname<td>字符串<td>表单填写人姓名</table>

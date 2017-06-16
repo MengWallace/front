@@ -1,0 +1,134 @@
+//doc images and talbe
+
+img {
+  max-width: 100%;
+}
+table {
+  width: 100%;
+  max-width: 100%;
+}
+
+table tr {
+  border-top: 1px solid #f0f0f0;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f4f4f4;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #f0f0f0;
+  margin: 0;
+  min-width: 100px;
+  vertical-align: middle;
+  color: #333;
+  padding: 15px;
+  line-height: 1.42857143;
+}
+
+table tr td {
+  border: 1px solid #f0f0f0;
+  padding: 15px;
+  line-height: 1.42857143;
+  margin: 0;
+}
+
+//doc
+
+.doc {
+  padding-right: 180px;
+
+  h1, h2,h3 {
+    margin-bottom: 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      padding-top: 70px;
+      margin-top: -70px;
+      visibility: hidden;
+    }
+  }
+
+  @media (max-width: @screen-mobile-max) {
+    padding-right: 0;
+  }
+}
+
+
+
+.doc_nav_container {
+  float: right;
+  margin-top: 60px;
+  @media (max-width: @screen-mobile-max) {
+    float: none;
+    display: block;
+  }
+}
+
+
+.doc_nav {
+  font-size: 13px;
+  border-left: 4px solid @palette-Blue-700;
+  float: right;
+  width: 160px;
+  max-height: 407px;
+  margin-left: 20px;
+  position: fixed;
+
+  @media (max-width: @screen-mobile-max) {
+    &:not(:empty) {
+      margin: 20px 0 24px;
+      float: right;
+      width: 100%;
+      position: relative;
+      top:0;
+      z-index: 0;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 12px;
+
+    li {
+      line-height: 16px;
+      margin: 8px 0 0;
+      position: relative;
+
+      a {
+        color: @palette-Black-500;
+        display: block;
+        overflow: hidden;
+        user-select: none;
+        text-decoration: none;
+
+        &:focus, &:hover, &:active, &.active{
+          color: @palette-Blue-400;
+        }
+      }
+
+    }
+
+    > :first-child > :first-child {
+      border:0;
+      padding-top:0;
+    }
+    > :first-child > :not(:first-child) {
+      margin-top:24px;
+    }
+  }
+
+  > ul > :first-child {
+    margin-top:0;
+    font-weight:bold;
+    > a {
+      color:@palette-Grey-600;
+    }
+  }
+}

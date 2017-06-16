@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="assets/images/icons/icon.png">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <!--国内浏览器默认使用极速模式-->
+    <meta name="renderer" content="webkit">
+    <title>开发者中心</title>
+
+    <!-- build:open_css -->
+    <!-- Vendor CSS -->
+    <link href="components/animate.css/animate.min.css" rel="stylesheet">
+    <link href="components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css"
+          rel="stylesheet">
+    <link href="components/google-material-color/dist/palette.css" rel="stylesheet">
+    <link href="components/bootstrap-sweetalert/dist/sweetalert.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="assets/styles/open.css" rel="stylesheet">
+    <!-- endbuild -->
+    <script src="assets/scripts/page-loader.js"></script>
+</head>
+
+<body data-ma-header="blue">
+<header id="header" class="media theme">
+    <div class="pull-left h-logo">
+        <a class="icon">
+            <img src="assets/images/icons/logo.svg">
+        </a>
+        <span class="hidden-xs">
+            开发者中心
+        </span>
+    </div>
+    <ul class="pull-right h-menu">
+        <li class="hm-search-trigger">
+            <a href="#" data-ma-action="search-open">
+                <i class="hm-icon zmdi zmdi-search"></i>
+            </a>
+        </li>
+        <li><a href="open.html"><span class="hm-label">首页</span></a></li>
+        <li><a href="docs.html"><span class="hm-label">开发文档</span></a></li>
+        <li class="active">
+            <a href="#"><span class="hm-label">我的应用</span></a>
+        </li>
+        <li id="login"><a href="#"><span class="hm-label">登录</span></a></li>
+        <li class="dropdown hm-profile hide">
+            <span class="avatar avatar-sm" data-toggle="dropdown"></span>
+            <ul class="dropdown-menu pull-right dm-icon">
+                <li class="hidden-xs p-l-15 p-r-15 p-t-10">
+                    <div class="hc-item palette-Blue bg selected" data-ma-header-value="blue"></div>
+                    <div class="hc-item palette-Cyan bg" data-ma-header-value="cyan-600"></div>
+                    <div class="hc-item palette-Green bg" data-ma-header-value="green"></div>
+                    <div class="hc-item palette-Light-Green bg" data-ma-header-value="lightgreen"></div>
+                    <div class="hc-item palette-Blue-Grey bg" data-ma-header-value="bluegrey"></div>
+                    <div class="hc-item palette-Orange bg" data-ma-header-value="orange"></div>
+                    <div class="hc-item palette-Purple-600 bg" data-ma-header-value="purple-600"></div>
+                    <div class="hc-item palette-Red-400 bg" data-ma-header-value="red-400"></div>
+                    <div class="hc-item palette-Pink-400 bg" data-ma-header-value="pink-400"></div>
+                    <div class="hc-item palette-Grey-600 bg" data-ma-header-value="grey-600"></div>
+                </li>
+
+                <li class="divider hidden-xs"></li>
+                <li class="hidden-xs">
+                    <a data-action="fullscreen"><i class="zmdi zmdi-fullscreen"></i> 全屏</a>
+                </li>
+                <li>
+                    <a href="/auth/logout?redirect_uri=/apps/open.html"><i class="zmdi zmdi-time-restore"></i> 退出</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="h-search pull-left">
+        <div class="p-relative">
+            <input type="search" class="hs-input" id="search" placeholder="搜索文档">
+            <i class="zmdi zmdi-search hs-reset" data-ma-action="search-clear"></i>
+            <div class='search_autocomplete' id="search-result">
+                <ul>
+                    <li>没有查询到相关文档</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<section id="main" class="open">
+    <section id="content">
+        <div class="container c-boxed">
+            <div id="real-name-verrified" class="card row hide">
+                <div class="card-body card-padding row">
+                    <div class="col-md-5 text-center"><img src="assets/images/people.png"></div>
+                    <div class="col-md-7">
+                        <div class="text-center" style="margin-top: 60px">
+                            <h4>完成实名认证，才能进行开发哦</h4>
+                            <br>
+                            <a href="/account/auth" class="btn palette-Blue bg waves-effect">去认证</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="main-card" class="card">
+                <div class="card-header">
+                    <h2>我的应用
+                        <small id="apps-table-subtitle"></small>
+                    </h2>
+                    <button href="javascript:void(0)" onclick="AppOpen.createApp()"
+                            class="btn palette-Blue bg btn-float waves-effect waves-circle waves-float"><i
+                            class="zmdi zmdi-plus"></i></button>
+                </div>
+                <div class="card-body card-padding table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th width="150px">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="apps-table">
+                        <tr>
+                            <td colspan="4" class="loading text-center">载入中...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <script id="apps-table-template" type="text/template">
+                        {{#apps}}
+                        <tr>
+                            <td onclick="AppOpen.showAppDetail('{{id}}')" style="cursor: pointer">
+                                {{name}}<span class="hidden-xs">({{homepageuri}})</span>
+                            </td>
+                            <td>
+                                <span class="{{statusLocal.color}}" 
+                                    data-placement="top" 
+                                    {{#statusLocal.info}} 
+                                        data-toggle="tooltip" 
+                                        title="{{statusLocal.info}}" 
+                                    {{/statusLocal.info}}>
+                                    {{#statusLocal.href}}
+                                        <a href="{{statusLocal.href}}" target="_blank">{{statusLocal.name}}</a>
+                                    {{/statusLocal.href}}
+                                    {{^statusLocal.href}}
+                                        {{statusLocal.name}}
+                                    {{/statusLocal.href}}
+                                    {{#statusLocal.info}}
+                                        <i class="zmdi zmdi-info"></i> 
+                                    {{/statusLocal.info}}
+                                </span> 
+                            </td>
+                            <td>{{createdatLocal}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" onclick="AppOpen.loadMore(this,'{{id}}')"
+                                            class="btn btn btn-primary btn-xs dropdown-toggle"
+                                            data-toggle="dropdown">更多<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {{#statusLocal.showPublish}}
+                                        <li><a href="/open/Publish/publish?clientid={{id}}" target="_blank"
+                                               class="palette-Green text">发布到应用中心</a>
+                                        </li>
+                                        {{/statusLocal.showPublish}}
+
+                                        {{#statusLocal.showUnreview}}
+                                        <li><a href="/open/Apps/waitAudit?appid={{id}}" target="_blank"
+                                               class="palette-Amber text">撤回审核申请</a></li>
+                                        {{/statusLocal.showUnreview}}
+
+                                        {{#statusLocal.showUnpublish}}
+                                        <li><a href="/open/Publish/offlineApp?clientid={{id}}" target="_blank"
+                                               class="palette-Amber text">撤销发布</a></li>
+                                        {{/statusLocal.showUnpublish}}
+                                        <li><a href="javascript:AppOpen.showAppDetail('{{id}}')">查看详情</a></li>
+                                        <li><a href="javascript:AppOpen.editApp('{{id}}')">编辑应用</a></li>
+                                        <li class="more-scopes"><a>...</a></li>
+                                        <li><a href="javascript:AppOpen.revokeAppUsers('{{id}}')"
+                                               class="palette-Orange text">撤销用户授权</a></li>
+                                        <li><a href="javascript:AppOpen.deleteApp('{{id}}')"
+                                               class="palette-Red-700 text">删除</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>{{/apps}}
+                    </script>
+                    <template type="text/template" id="apps-table-error">
+                        <tr>
+                            <td colspan="4" class="loading text-center">您还没有创建任何应用，请点击右上角按钮创建应用。</td>
+                        </tr>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-create-app" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title"><h4>创建应用</h4></div>
+                        <small>创建应用并接入用户授权。</small>
+                    </div>
+                    <div class="modal-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-edit-app" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title"><h4>编辑应用</h4></div>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template id="modal-edit-app-template" type="text/template">
+            <form class="form-horizontal" autocomplete="off" role="form" data-toggle="validator" role="form">
+                <div class="alert alert-danger hide" role="alert">
+                    <button type="button" class="close" data-hide="alert" aria-label="close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <text></text>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">应用名称</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input name="name" type="text" class="form-control input-sm" placeholder="应用名称"
+                                   data-minlength="2" data-maxlength="16" data-error="应用名称必须为2到16位到字符" required
+                                   value="{{name}}">
+                        </div>
+                        <small class="help-block with-errors"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">应用描述</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <textarea class="form-control input-sm" rows="4" placeholder="请输入10到100字的应用描述" type="text"
+                                      name="description" data-minlength="10" data-maxlength="100"
+                                      data-error="应用描述必须为10到100位到字符" required>{{description}}</textarea>
+                        </div>
+                        <small class="help-block with-errors"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">根域地址</label>
+                    <div class="col-sm-10">
+                        <div class="fg-line">
+                            <input class="form-control input-sm" type="url" name="homepageuri"
+                                   placeholder="例如：http://www.example.com"
+                                   data-error="请输入正确的地址格式，例如： http://www.example.com" value="{{homepageuri}}"
+                                   required>
+                        </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <p>阅读我们的 <a href="docs.html" target="_blank">OAuth 文档</a> 获取更多关于 根域地址 的信息。</p>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">确定</button>
+                    <button type="button" class="btn btn-link cancel" data-dismiss="modal">取消</button>
+                </div>
+            </form>
+        </template>
+
+        <!--应用详情-->
+        <div class="modal fade" id="modal-app-detail" tabindex="-1" role="dialog" aria-hidden="true"></div>
+        <template id="modal-app-detail-template" type="text/template">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">应用详情：{{name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <h4>Client ID</h4>
+                            <p>{{id}}</p>
+                        </div>
+
+                        <div>
+                            <h4>Client Secret</h4>
+                            <p><span>{{secret}}</span>
+                                <button type="button" data-dismiss="modal" class="btn btn-danger pull-right"
+                                        onclick="AppOpen.resetAppSecret('{{id}}')">重置
+                                </button>
+                            </p>
+                        </div>
+                        <div>
+                            <h4>获取 authorization code 的链接
+                                <small>（参考）</small>
+                            </h4>
+                            <pre><a target="_blank"
+                                    href="{{authorization_code_url}}">{{authorization_code_url}}</a></pre>
+                        </div>
+                        <p>阅读我们的 <a href="docs.html" target="_blank">OAuth 文档</a> 获取更多信息。</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--发布到应用中心-->
+        <div class="modal fade" id="modal-app-publish" tabindex="-1" role="dialog" aria-hidden="true"></div>
+        <template id="modal-app-publish-template" type="text/template">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title"><h4>发布到应用中心： {{name}}</h4></div>
+                        <small>发布到应用中心，大家可以随时查看你的到应用。</small>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" autocomplete="off" role="form" data-toggle="validator"
+                              role="form">
+                            <div class="alert alert-danger hide" role="alert">
+                                <button type="button" class="close" data-hide="alert" aria-label="close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <text></text>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应用简介</label>
+                                <div class="col-sm-10">
+                                    <div class="fg-line">
+                                        <textarea class="form-control input-sm" rows="4" placeholder="对应用对功能和适用场景坐下简要介绍"
+                                                  type="text" name="description" data-minlength="10"
+                                                  data-maxlength="100" data-error="应用描述必须为10到100位到字符"
+                                                  required>{{description}}</textarea>
+                                    </div>
+                                    <small class="help-block with-errors"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应用分类</label>
+                                <div class="col-sm-10 input-text-group">
+                                    <input type="text" class="form-control input-sm" placeholder="请选择应用分类" required>
+                                    <button type="button" class="btn btn-link pull-right" style="margin-top: -32px"
+                                            data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" style="width: 100%">
+                                        <li><a>教学</a></li>
+                                        <li><a>科研</a></li>
+                                        <li><a>管理</a></li>
+                                        <li><a>服务</a></li>
+                                        <li><a>生活</a></li>
+                                        <li><a>工具</a></li>
+                                        <li><a>娱乐</a></li>
+                                        <li><a>其他</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">入口地址</label>
+                                <div class="col-sm-10">
+                                    <div class="fg-line">
+                                        <span class="pull-left"
+                                              style="margin-top: 6px"> {{homepageuri}}/</span><input
+                                            style="width: 250px" class="form-control input-sm" type="text"
+                                            name="home"
+                                            placeholder="请输入用户自动登录入口地址" data-error="请输入正确的地址格式">
+                                    </div>
+                                    <div class="help-block with-errors">
+                                        入口地址是用户进入应用的入口，例如：{{homepageuri}}/home,入口地址必须检查用户登录状态，如果没有登录自动跳转到用户授权页面，否则审核时不予通过
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应用图标</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-3"><img src="assets/images/icons/icon_app.png"></div>
+                                        <div class="col-sm-9 help-block">
+                                            请上传应用图标，最优尺寸128*128像素，仅支持PNG格式，大小不超过400KB。图标必须表达应用名称或意图，图标不合格会影响应用的审核、上线。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">应用截图</label>
+                                <div class="col-sm-10">
+                                    <div class="help-block with-errors">应用需要至少一个屏幕截图, 尺寸为960像素*576像素，格式为 jpeg或png
+                                    </div>
+                                    <div id="slidearea">
+                                        <div class="slide add">+</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-info">提交审核</button>
+                                <button type="button" class="btn btn-link cancel" data-dismiss="modal">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <div class="modal fade" id="modalAppEdit" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">详情：门锁后端</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <h4>Client ID</h4>
+                            <p>srv_113323.ruc.edu.cn</p>
+                        </div>
+
+                        <div>
+                            <h4>Client Secret</h4>
+                            <p>
+                                <button type="button" class="btn btn-danger">重新生成并查看</button>
+                            </p>
+                        </div>
+                        <p>阅读我们的 <a href="docs.html" target="_blank">OAuth 文档</a> 获取更多信息。</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-reg-scope" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+        <template id="modal-reg-scope-template" type="text/template">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title"><h4>为 {{name}} 申请高级权限</h4></div>
+                        <small>高级权限是指与用户授权无关，用于集成现有系统，这种权限申请只对学校管理员用户开放。对于用户权限请参考 <a href="docs.html"
+                            开发文档</a> 向用户进行申请。
+                        </small>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="form-horizontal" autocomplete="off" role="form" data-toggle="validator"
+                              role="form">
+                            <div class="alert alert-danger hide" role="alert">
+                                <button type="button" class="close" data-hide="alert" aria-label="close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <text></text>
+                            </div>
+                            <div class="scope_list">
+                                {{#scopes}}
+                                <div class="scope_spacer">
+                                    <div class="scope_summary">
+                                        {{summary}}
+                                        <div class="scope_summary_desc">{{description}}</div>
+                                    </div>
+                                    {{^acquired}}
+                                    <div class="checkbox"><label><input type="checkbox" name="{{id}}" value="on"><i
+                                            class="input-helper"></i></label></div>
+                                    {{/acquired}}
+
+                                    {{#acquired}}
+                                    <button type="button" class="btn btn-link btn-icon-text waves-effect"><i
+                                            class="zmdi zmdi-check"></i> 已取得
+                                    </button>
+                                    {{/acquired}}
+
+                                </div>
+                                {{/scopes}}
+                            </div>
+                            <div>
+                                <div class="policy_message">
+                                    您也可以阅读我们 <a href="docs.html" target="_blank">学校内部调用文档</a> 获取更多关于 高级权限 的信息。
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                {{^nosubmit}}
+                                <button type="submit" class="btn btn-info">提交申请</button>
+                                {{/nosubmit}}
+                                <button type="button" class="btn btn-link cancel" data-dismiss="modal">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </section>
+</section>
+
+<!-- Start page loader -->
+<div id="page-loader" class="palette-Purple-500 bg">
+    <div class="page-loader__spinner"></div>
+</div>
+<!-- End page loader -->
+<footer id="footer">
+    Copyright ©2016 北京图优谱信息技术有限公司
+    <ul class="f-menu">
+        <li><a href="http://www.tiup.cn/about_us">关于我们</a></li>
+        <li><a href="http://www.tiup.cn/faq">常见问题</a></li>
+        <li><a href="http://www.tiup.cn/archives/category/terms">服务条款</a></li>
+        <li><a href="http://www.tiup.cn/connect_us">联系我们</a></li>
+    </ul>
+</footer>
+<!-- build:open_js -->
+<!-- Javascript Libraries -->
+<script src="components/jquery/dist/jquery.min.js"></script>
+<script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/scripts/app.js"></script>
+
+<script src="components/mustache/mustache.min.js"></script>
+<script src="assets/scripts/open.docs.js"></script>
+<script src="assets/scripts/search.js"></script>
+
+
+<!-- Used Just In Current Page -->
+<script src="components/bootstrap-validator/dist/validator.min.js"></script>
+<script src="components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+<script src="components/bootstrap-sweetalert/dist/sweetalert.js"></script>
+<script src="components/moment/min/moment.min.js"></script>
+<script src="components/moment/locale/zh-cn.js"></script>
+<!-- endbuild -->
+<script src="assets/scripts/open.apps.js"></script>
+</body>
+</html>

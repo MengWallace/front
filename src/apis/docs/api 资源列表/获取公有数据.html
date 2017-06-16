@@ -1,0 +1,45 @@
+<h1 id=获取公有数据>获取公有数据</h1><p>公有数据是指不需要向任何个人或单位进行授权的数据，目前我们开放的公有数据如下。<h2 id=api列表>API列表</h2><table><thead><tr><th>URL<th>Scope<th>描述<tbody><tr><td>/apis/public/v2/school_departments<td>public<td>获取学校部门列表</table><h2 id=接口详情>接口详情</h2><h3 id=获取学校部门列表>获取学校部门列表</h3><ul><li>网址:<code>/apis/public/v2/school_departments</code><li>方法：<code>GET</code><li>请求示例（cURL）：</ul><pre><code>   curl &quot;/apis/public/v2/school_departments&quot;
+</code></pre><ul><li>返回结果：（HTTP状态码为：200）</ul><pre><code class=language-json>{
+  &quot;code&quot;: 200,
+  &quot;msg&quot;: &quot;GetSchoolDepList Handler OK&quot;,
+  &quot;data&quot;: {
+    &quot;schooldeps&quot;: [
+      {
+        &quot;departmentid&quot;: &quot;4053&quot;,
+        &quot;departmentname&quot;: &quot;行政单位&quot;,
+        &quot;parentid&quot;: &quot;0&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 739,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot;
+      },
+      {
+        &quot;departmentid&quot;: &quot;4055&quot;,
+        &quot;departmentname&quot;: &quot;教务处&quot;,
+        &quot;parentid&quot;: &quot;4053&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 1282,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-15 18:06:55&quot;
+      },
+      {
+        &quot;departmentid&quot;: &quot;4086&quot;,
+        &quot;departmentname&quot;: &quot;资产与后勤管理处&quot;,
+        &quot;parentid&quot;: &quot;4053&quot;,
+        &quot;schoolid&quot;: &quot;235&quot;,
+        &quot;members&quot;: 80,
+        &quot;description&quot;: &quot; &quot;,
+        &quot;status&quot;: &quot;0&quot;,
+        &quot;ctime&quot;: &quot;2013-08-18 18:43:26&quot;
+      }
+    ],
+    &quot;count&quot;: 169
+  }
+}
+</code></pre><ul><li>错误处理： （HTTP状态码为：非200）</ul><pre><code class=language-json>    {
+      &quot;error&quot;: &quot;bad_request&quot;,
+      &quot;error_description&quot;: &quot;error_description&quot;
+    }
+</code></pre>

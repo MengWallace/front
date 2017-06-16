@@ -1,0 +1,17 @@
+<h2 id=获取某条通知详情>获取某条通知详情</h2><ul><li>接口地址：/v1/notices/{nid}<li>返回格式：JSON<li>请求方式：GET<li><p>请求头部：<pre><code>Content-Type : application/json
+Authorization: {Bearer Token}
+</code></pre><li><p>返回结果：<pre><code>    {
+        \&quot;schoolid\&quot;:\&quot;235\&quot;,
+        \&quot;nid\&quot;:\&quot;4864\&quot;,
+        \&quot;type\&quot;:\&quot;1\&quot;,
+        \&quot;fromuid\&quot;:\&quot;1076653\&quot;,
+        \&quot;fromname\&quot;:\&quot;范桢\&quot;,
+        \&quot;logo\&quot;:\&quot;http://static.tiup.cn/50/2.png\&quot;,
+        \&quot;departmentid\&quot;:\&quot;4259\&quot;,
+        \&quot;departmentname\&quot;:\&quot;信息技术中心\&quot;,
+        \&quot;title\&quot;:\&quot;中国人民大学文化大厦二层防火分区卷帘改造招标公告\&quot;,
+        \&quot;content\&quot;:\&quot;为了公开、公平、公正、合理地做好中国人民大学文化技园文化大厦二层防火分区卷帘改造招标工作，现我公司面向社会公开邀请符合条件的企业报名参加本工作事项的投标。\&quot;,
+        \&quot;starttime\&quot;:\&quot;0000-00-00 00:00:00\&quot;,
+        \&quot;endtime\&quot;:\&quot;0000-00-00 00:00:00\&quot;
+    }
+</code></pre><li><p>返回字段值<table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>schoolid<td>int<td>学校的ID<tr><td>nid<td>int<td>通知ID<tr><td>type<td>int<td>通知类型<tr><td>fromuid<td>int<td>发布人uid<tr><td>fromname<td>string<td>发布人姓名<tr><td>logo<td>string<td>发布人头像<tr><td>departmentid<td>int<td>发布部门ID<tr><td>departmentname<td>string<td>发布部门名称<tr><td>title<td>string<td>通知标题<tr><td>content<td>string<td>通知内容<tr><td>starttime<td>string<td>通知的开始时间<tr><td>endtime<td>string<td>通知的结束时间</table></ul>

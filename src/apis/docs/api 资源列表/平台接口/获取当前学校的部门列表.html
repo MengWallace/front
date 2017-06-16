@@ -1,0 +1,19 @@
+<h4 id=获取当前学校的部门列表>获取当前学校的部门列表</h4><p>接口地址：/v1/schools/{sid}/departments<p>返回格式：JSON<p>请求方式：GET<p>请求头部：<pre><code>     Content-Type : application/json
+     Authorization: {Bearer Token}
+</code></pre><p>请求参数：<table><thead><tr><th>请求字段值<th>字段类型<th>说明<tbody><tr><td>perpage<td>整形<td>返回数据条数，默认为10<tr><td>curpage<td>整形<td>返回当前页码数，默认为1<tr><td>order<td>字符串<td>排序字段，默认为‘ctime desc’</table><p>返回结果：<pre><code>{
+    \&quot;count\&quot;: \&quot;110\&quot;,
+    \&quot;data\&quot;: [
+        {
+            \&quot;ctime\&quot;: \&quot;2015-09-02\&quot;,
+            \&quot;departmentname\&quot;: \&quot;国际关系学院\&quot;,
+            \&quot;departmentid\&quot;: \&quot;4223\&quot;,
+        },
+        {
+            \&quot;ctime\&quot;: \&quot;2015-09-02\&quot;,
+            \&quot;departmentname\&quot;: \&quot;信息学院\&quot;,
+            \&quot;departmentid\&quot;: \&quot;4233\&quot;,
+        }
+        ...
+    ]
+}
+</code></pre><table><thead><tr><th>返回字段值<th>字段类型<th>说明<tbody><tr><td>count<td>整形<td>部门总数<tr><td>data<td>数组<td>当前页部门数据数组<tr><td>data-&gt;ctime<td>日期<td>部门创建时间<tr><td>data-&gt;departmentname<td>字符串<td>部门名称<tr><td>data-&gt;departmentid<td>整形<td>部门ID</table>

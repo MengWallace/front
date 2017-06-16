@@ -1,0 +1,33 @@
+<h1 id=获取消息提醒列表>获取消息提醒列表</h1><ul><li><p>请求地址： /v1/sysmsgs<li><p>请求方法： get<li><p>请求参数：</ul><table><thead><tr><th>参数名<th>说明<tbody><tr><td>uid<td>消息的接收人uid<tr><td>type<td>消息的类型对应平台 默认为全部 1提醒 2待办 3全部<tr><td>result<td>消息的状态 默认为未处理 0所有 1未处理 2已处理<tr><td>source<td>消息的来源 默认为全部 &lsquo;me&rsquo;:me,&lsquo;serv&rsquo;:服务中心,&lsquo;publichome&rsquo;:公共主页,&lsquo;group&rsquo;:群组,&lsquo;calender&rsquo;:日历,&lsquo;edu&rsquo;:课程中心,&lsquo;comments&rsquo;:评论,&lsquo;appcenter&rsquo;:应用中心<tr><td>curpage<td>当前页码<tr><td>perpage<td>每页条数</table><ul><li>请求响应：</ul><p>```<p>{<pre><code>\&quot;code\&quot;: 0,
+\&quot;data\&quot;: {
+    \&quot;count\&quot;: \&quot;2377\&quot;,
+    \&quot;list\&quot;: [
+        {
+            \&quot;uid\&quot;: \&quot;1168929\&quot;,
+            \&quot;smid\&quot;: \&quot;1848188\&quot;,
+            \&quot;subtype\&quot;: \&quot;serv_toaudit\&quot;,
+            \&quot;content\&quot;: {
+                \&quot;aid\&quot;: \&quot;5479\&quot;,
+                \&quot;sname\&quot;: \&quot;公共邮箱申请服务\&quot;,
+                \&quot;cat\&quot;: \&quot;1\&quot;,
+                \&quot;fuid\&quot;: 1168929
+            },
+            \&quot;result\&quot;: false,
+            \&quot;ctime\&quot;: \&quot;31分钟前\&quot;,
+            \&quot;source\&quot;: \&quot;serv\&quot;,
+            \&quot;hidden\&quot;: \&quot;0\&quot;,
+            \&quot;fav\&quot;: \&quot;0\&quot;,
+            \&quot;message\&quot;: \&quot;林黛玉 创建的 公共邮箱申请服务 请求签批\&quot;,
+            \&quot;link\&quot;: \&quot;/servcenter/#/service/audit/5479\&quot;
+        },
+        ...
+        {
+
+        }
+    ],
+    \&quot;users\&quot;: {
+        \&quot;1168929\&quot;: \&quot;林黛玉\&quot;,
+        \&quot;1169213\&quot;: \&quot;轩辕宸晞\&quot;
+    }
+}
+</code></pre><p>}<p>```__

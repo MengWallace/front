@@ -1,0 +1,34 @@
+#page-loader {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #2196F3;
+  z-index: 100;
+  text-align: center;
+  position: fixed;
+}
+#page-loader:before {
+  content: '';
+  width: 1px;
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+html:not(.ie9) .page-loader__spinner {
+  box-sizing: border-box;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  border-radius: 50%;
+  box-shadow: 0 -10px 0 13px rgba(255, 255, 255, 0.5) inset;
+  animation: rotate 1s infinite linear;
+  vertical-align: middle;
+}
+.ie9 .page-loader__spinner {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.2);
+}
+.ie9 .page-loader__spinner:before {
+  content: 'Page is loading...';
+}

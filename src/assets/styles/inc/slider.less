@@ -1,0 +1,46 @@
+.slider-area {
+  position: relative;
+  margin: 10px;
+
+  > .slider-bar-bg {
+    border: 1px solid #ddd;
+    background: #e6e6e6;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  > .slider-bar-line {
+    background: @m-deeporange;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  > .drag-ico {
+    display: inline-block;
+    zoom: 1;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 200px;
+    margin-left: -16px;
+    top: -6px;
+    z-index: 2;
+  }
+
+  > .drag-ico:before {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    width: 100%;
+    transform: translate3d(-25%, 0, 0);
+    height: 0;
+    padding-bottom: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}

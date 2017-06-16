@@ -1,0 +1,1 @@
+"use strict";window.onload=function(){function t(t){var e=1,n=setInterval(function(){e<=.1&&(clearInterval(n),t.style.display="none"),t.style.opacity=e,t.style.filter="alpha(opacity="+100*e+")",e-=.1*e},10)}setTimeout(function(){t(document.getElementById("page-loader"))},200)};

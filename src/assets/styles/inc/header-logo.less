@@ -1,0 +1,39 @@
+/*----------------------------------
+    Logo
+-----------------------------------*/
+.h-logo {
+  @media (min-width: @screen-xs-max) {
+    width: 200px;
+    position: relative;
+  }
+  .icon {
+    height: 36px;
+    width: 36px;
+    font-size: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    margin-right: 15px;
+    color: #fff;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color;
+    transition-duration: 250ms;
+
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  span {
+    color: #fff;
+    line-height: 36px;
+    vertical-align: middle;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 18px;
+  }
+}

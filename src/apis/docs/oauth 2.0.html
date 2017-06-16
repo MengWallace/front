@@ -1,0 +1,44 @@
+<h1 id=使用-oauth-2-0-访问创新盟校-api>使用 OAuth 2.0 访问创新盟校 API</h1><p>TiUP产品支持 OAuth 2.0 协议的授权访问。关于 OAuth 2.0 协议规范，请参考<a href=http://oauth.net/2/>这里</a>。TiUP支持三种 OAuth 2.0 的授权流程：<ul><li>WEB应用的授权流程<li>移动客户端应用、桌面客户端应用的授权流程<li>服务器端与用户无关的直接调用</ul><h2 id=快速介绍>快速介绍</h2><p>使用 OAuth 2.0 的流程可以简单概括为：<ol><li>应用向TiUP请求授权。<li>TiUP为用户显示一个授权页面，用户在此页面确认是否同意应用的请求。<li>如果用户同意授权，应用会获取到一个访问令牌(access_token)，通过此令牌，应用可以访问授权用户的数据。<li>如果访问需要授权的 API，请使用 HTTPS 协议，加上 access_token 的 Header。</ol><h2 id=使用场景>使用场景</h2><p>这篇文章就三个主要的使用场景做下介绍。<h3 id=web应用>WEB应用</h3><p>WEB应用需通过用户登录身份进行授权，授权流程图如下：<p><img src=/apps/docs/assets/img/wiki_authorization_code_flow.png alt title="oauth authorization code Flow"><h4 id=1-客户端调用获取-authorization-code-的-api>(1) 客户端调用获取 Authorization Code 的 API</h4><ul><li>网址:
+<code>http://auth_host/oauth2/authorize</code><li>方法：
+<code>浏览器端GET访问</code><li>请求参数:</ul><table><thead><tr><th align=center>参数名称<th align=left>参数类型<th align=left>是否必须<th align=left>描述<tbody><tr><td align=center>client_id<td align=left>text<td align=left>是<td align=left>申请的 client id<tr><td align=center>response_type<td align=left>text<td align=left>是<td align=left>固定为：code<tr><td align=center>scope<td align=left>text<td align=left>是<td align=left>申请token权限，一般填写：<code>userinfo</code>，如果需要更多用户数据，请参考 《API 资源列表-获取用户数据》，查找对应的scope，多个scope用空格连接<tr><td align=center>redirect_uri<td align=left>text<td align=left>是<td align=left>成功授权后的回调地址，必须和申请应用时的地址一致，用于接收用户授权码<tr><td align=center>state<td align=left>text<td align=left>否<td align=left>client端的状态码。用于第三方应用防止CSRF攻击，成功授权后回调时会原样返回。<tr><td align=center>access_type<td align=left>text<td align=left>否<td align=left>一般情况下web应用不需要这个参数，移动端和桌面应用需要永久保持会话的时候需要这个参数，参数值为：offline</table><ul><li>请求示例：</ul><pre><code>  http://auth_host/oauth2/authorize?client_id=some_client_id&amp;response_type=code&amp;scope=userinfo&amp;redirect_uri=http://www.exmaple.com/back&amp;state=somestate&amp;school_code=ruc&amp;theme=schools
+</code></pre><ul><li>返回结果：<li>当用户拒绝授权时，浏览器会重定向到 redirect_uri，并附加错误信息.</ul><pre><code>  https://www.example.com/back?error=access_denied
+</code></pre><ul><li>当用户同意授权时，浏览器会重定向到 redirect_uri，并附加 autorization_code.</ul><pre><code>  https://www.example.com/back?code=13425244&amp;state=somestate
+</code></pre><h4 id=2-服务器端获取-access-token>(2) 服务器端获取 Access Token</h4><ul><li>网址:
+<code>https://auth_host/oauth2/token</code><li>方法：
+<code>POST</code><li>请求参数: <code>Content-Type: application/x-www-form-urlencoded</code></ul><table><thead><tr><th align=left>参数名称<th align=left>参数类型<th align=left>是否必须<th align=left>描述<tbody><tr><td align=left>client_id<td align=left>text<td align=left>是<td align=left>申请的 client_id<tr><td align=left>client_secret<td align=left>text<td align=left>是<td align=left>申请的 client_secret<tr><td align=left>grant_type<td align=left>text<td align=left>是<td align=left>在本流程中，此值为 authorization_code<tr><td align=left>code<td align=left>text<td align=left>是<td align=left>上一步中获得的 authorization_code</table><ul><li>请求示例（cURL）：</ul><pre><code>  curl -v -u &lt;client_id&gt;:&lt;client_serent&gt; 
+     -d &quot;grant_type=authorization_code&quot; 
+     -d &quot;code=&lt;authorization_code&gt;&quot; 
+   'http://auth_host/oauth2/token'
+</code></pre><ul><li>返回结果：</ul><pre><code>  {
+    &quot;access_token&quot;:&quot;a14afef0f66fcffce3e0fcd2e34f6ff4&quot;,
+    &quot;expires_in&quot;:3600,
+    &quot;uid&quot;:&quot;sds4fsa23243jf3da&quot;,,
+    &quot;token_type&quot;:&quot;Bearer&quot;
+  }
+</code></pre><ul><li>使用AccessToken：</ul><pre><code>  curl &quot;https://auth_host/oauth2/v1/userinfo&quot; -H &quot;Authorization: Bearer a14afef0f66fcffce3e0fcd2e34f6ff4&quot;
+</code></pre><h3 id=移动和桌面端应用>移动和桌面端应用</h3><p>移动和桌面端授权和WEB应用授权流程基本相同，需要通过两步来获取 access_token, 不同的是redirect_uri的scheme根据情况修改为应用的scheme， 以通过应用接收回调参数，例如您的redirect_uri可能需要由<code>http://example.com/back</code>变成<code>example://back</code>如果有必要，这类应用的access_type参数值为offline， 便于在token过期后，刷新token, 关于具体调用流程请参考上一节内容。<h3 id=服务器端授权-1>服务器端授权</h3><p>TiUP学校内部管理员用户，支持从服务器端端直接获取公有数据和用户部分数据，而不需要用户授权，例如：获取学校部门列表，获取用户学工号，修改班级名称等操作， 这类用户需要预先在【我的应用-&gt;服务器端】申请需要调用的scope，然后获取access_token, 获取方法如下：<h4 id=1-服务器端直接获取accesstoken>(1) 服务器端直接获取AccessToken</h4><ul><li>网址: <code>https://auth_host/oauth2/token</code><li>方法：<code>POST</code><li>请求参数:<code>Content-Type: application/x-www-form-urlencoded</code></ul><table><thead><tr><th align=left>参数名称<th align=left>参数类型<th align=left>是否必须<th align=left>描述<tbody><tr><td align=left>client_id<td align=left>text<td align=left>是<td align=left>申请的 client_id<tr><td align=left>client_secret<td align=left>text<td align=left>是<td align=left>申请的 client_secret<tr><td align=left>grant_type<td align=left>text<td align=left>是<td align=left>在本流程中，此值为 client_credentials<tr><td align=left>scope<td align=left>text<td align=left>否<td align=left>申请token权限，此token所需用途权限。如果为空，则为申请应用时的所有权限。</table><ul><li>请求示例（cURL）：</ul><pre><code>curl -v -u &lt;client_id&gt;:&lt;client_serent&gt; \
+   -d &quot;grant_type=authorization_code&quot; \
+   -d &quot;scope=&lt;login&gt;&quot; \
+ 'http://auth_host/oauth2/token'
+</code></pre><ul><li>返回结果：</ul><pre><code>{
+&quot;access_token&quot;:&quot;a14afef0f66fcffce3e0fcd2e34f6ff4&quot;,
+&quot;refresh_token&quot;:&quot;3e0fcd2e34f6ff4a14afef0f66fcffce&quot;,
+&quot;expires_in&quot;:13600,
+&quot;uid&quot;:&quot;sds4fsa23243jf3da&quot;,,
+&quot;token_type&quot;:&quot;Bearer&quot;
+}
+</code></pre><ul><li>使用AccessToken：</ul><pre><code>  curl &quot;https://apis_host/tiup/v1/schools&quot; -H &quot;Authorization: Bearer a14afef0f66fcffce3e0fcd2e34f6ff4&quot;
+</code></pre><h2 id=token-过期制>Token 过期制</h2><p>在 OAuth 2.0 中，access_token 不是长期有效的。在授权获取 access_token 时会一并返回其有效期，也就是返回值中的 expires_in 参数，默认为3600秒。在 access_token 使用过程中，如果服务器返回401错误：“unauthorized”，此时，说明 access_token 已经过期，除了通过再次引导用户进行授权来获取 access_token 外，如果您的token返回值中包含refresh_token， 则可以通过 refresh_token 的方式来换取新的 access_token 和 refresh_token。<h4 id=1-通过-refresh-token-换取-access-token-方法如下>（1）通过 refresh_token 换取 access_token 方法如下：</h4><ul><li>网址:
+<code>https://auth_host/oauth2/token</code><li>方法：
+<code>POST</code><li>请求参数:<code>Content-Type: application/x-www-form-urlencoded</code><br></ul><table><thead><tr><th align=left>参数名称<th align=left>参数类型<th align=left>是否必须<th align=left>描述<tbody><tr><td align=left>client_id<td align=left>text<td align=left>是<td align=left>申请的 client_id<tr><td align=left>client_secret<td align=left>text<td align=left>是<td align=left>申请的 client_secret<tr><td align=left>grant_type<td align=left>text<td align=left>是<td align=left>在本流程中，此值为 refresh_token<tr><td align=left>refresh_token<td align=left>text<td align=left>是<td align=left>刷新令牌</table><ul><li>请求示例（cURL）：</ul><pre><code>  curl -v -u &lt;client_id&gt;:&lt;client_serent&gt; \
+   -d &quot;grant_type=refresh_token&quot; \
+   -d &quot;refresh_token=&lt;0f66fcffce3e0fcd2e34f6ff4a14afef&gt;&quot; \
+ 'http://auth_host/oauth2/token'
+</code></pre><ul><li>返回结果:</ul><pre><code>{
+    &quot;access_token&quot;:&quot;a14afef0f66fcffce3e0fcd2e34f6ff4&quot;,
+    &quot;refresh_token&quot;:&quot;3e0fcd2e34f6ff4a14afef0f66fcffce&quot;,
+    &quot;expires_in&quot;:3600,
+    &quot;uid&quot;:&quot;sds4fsa23243jf3da&quot;,,
+    &quot;token_type&quot;:&quot;Bearer&quot;
+}
+</code></pre><blockquote><p>默认情况下，客户端授权access_token 过期时间为1小时，服务器端授权access_token过期时间为7天，refresh_token 过期时间为30天。</blockquote><h2 id=api访问频率控制>API访问频率控制</h2><p>为了维护服务器的稳定性和防止恶意使用，您需要对授权的 API 访问频率控制。如果服务器返回HTTP状态码为429, 错误：“too many requests”时说明您的接口已经超过了访问频率限制，针对接口访问频率控制细节如下：<p>针对用户授权单IP，单个接口的方法限制如下：<table><thead><tr><th align=left>级别<th align=left>限制<tbody><tr><td align=left>L1<td align=left>3000次/小时<tr><td align=left>L2<td align=left>8000次/小时<tr><td align=left>L3<td align=left>20000次/小时</table><p>针对服务器授权每个应用每个scope的访问限制如下：<table><thead><tr><th align=left>级别<th align=left>限制<tbody><tr><td align=left>L1<td align=left>3000次/小时<tr><td align=left>L2<td align=left>8000次/小时<tr><td align=left>L3<td align=left>20000次/小时</table><p>用户每次通过access token 请求API时，返回结果的 header 里会有当前访问限制信息<table><thead><tr><th align=left>HEADER名称<th align=left>含义<tbody><tr><td align=left>X-Ratelimit-Limit<td align=left>单用户每小时次数<tr><td align=left>X-RateLimit-Remaining<td align=left>单用户每小时剩余次数<tr><td align=left>X-RateLimit-Reset<td align=left>当前速率限制窗口复位的时间。单位是（UTC epoch seconds）</table><h2 id=客户端sdk>客户端SDK</h2><p>以下客户端库与流行的框架集成，这使得实现OAuth 2.0更简单。 随着时间的推移，会有更多的功能添加到SDK中。<ul><li><a href=https://github.com/tiup/oauth_sso>TiUP Oauth2 SSO Client Server Side</a><li><a href=https://github.com/tiup/oauth_sso>TiUP Oauth2 Client Demo for Java</a><li><a href=https://github.com/tiup/oauth_sso>TiUP Oauth2 Client for C#</a></ul>
